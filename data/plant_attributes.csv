@@ -1,0 +1,26 @@
+﻿Plant,Active,Start,Season,Mintemp,Maxtemp,Spring sow,Spring transplant,Fall sow,cal/g
+Pepper,TRUE,Indoors,Warm,17,35,-56,21,0,0.26
+Zucchini,TRUE,Direct,Warm,17,35,21,0,0,0.16
+Pole bean,TRUE,Direct,Warm,16,35,14,0,0,0.31
+Tomato,TRUE,Indoors,Warm,17,35,-42,21,0,0.18
+Squash,TRUE,Indoors,Warm,17,35,0,21,0,0.4
+Broccoli,TRUE,Indoors,Cool,10,22,-42,-14,-85,0.34
+Kale,TRUE,Indoors,Cool,10,26,-42,-21,-54,0.5
+Spinach,TRUE,Direct,Cool,5,20,-21,0,-7,0.23
+Cabbage,TRUE,Indoors,Cool,8,30,-56,-21,-135,0.24
+Lettuce,TRUE,Indoors,Cool,8,22,-42,-21,-56,0.14
+Cauliflower,TRUE,Indoors,Cool,13,30,-35,-14,-42,0.25
+Carrot,TRUE,Direct,Cool,10,28,-21,0,-70,0.41
+Onion,TRUE,Indoors,Cool,9,20,-70,-28,-42,0.42
+Sweet potato,TRUE,Indoors,Warm,18,35,-28,28,0,0.86
+Garlic,TRUE,Direct,Cool,0,35,-28,0,-7,1.49
+Potato,TRUE,Direct,Warm,9,35,-28,0,0,1.04
+Basil,TRUE,Indoors,Warm,16,35,-42,21,0,0.27
+Thyme,TRUE,Indoors,Warm,15,35,-63,21,0,1.01
+Sage,TRUE,Indoors,Warm,16,35,-42,7,0,1.01
+Cilantro,TRUE,Direct,Warm,15,35,14,0,0,0.23
+Parsley,TRUE,Indoors,Warm,15,35,-56,-21,0,0.23
+Dill,TRUE,Direct,Warm,15,35,14,0,0,0.23
+Calendula,FALSE,Direct,Warm,16,35,14,0,0,0
+Wildflowers,FALSE,Direct,Warm,16,35,14,0,0,0
+Nasturstium,FALSE,Direct,Warm,16,35,14,0,0,0

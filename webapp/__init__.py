@@ -1,47 +1,49 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from os import path
-from flask_login import LoginManager
+from flask_login import LoginManager, login_required
+import dash
 import logging
 
-#Create SQL database
+#Import environment variables
+import os
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
+DB_NAME = str(os.getenv('DATABASE_NAME'))
+SECRET_KEY = str(os.getenv('SECRET_KEY'))
+
+#Create SQL database object
 db = SQLAlchemy()
-DB_NAME = "database.db"
 
 #Initialize and return flask application
-def create_app():
+def create_webapp():
     #Create instance of flask object
-    app = Flask(__name__)
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    flask_app = Flask(__name__)
+    flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     #Set secret key of the application
-    app.config['SECRET_KEY'] = 'n14h29bnnf378n309'
+    flask_app.config['SECRET_KEY'] = SECRET_KEY
     #Link flask and create SQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
-    db.init_app(app)
+    flask_app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///../data/{DB_NAME}'
+    db.init_app(flask_app)
 
     #Import and assign objects from blueprint files
     from .views import views
     from .auth import auth
-    app.register_blueprint(views, urlprefix='/')
-    app.register_blueprint(auth, urlprefix='/')
-
-    #Import and create database
-    from .models import User
-    create_database(app)
+    flask_app.register_blueprint(views, urlprefix='/')
+    flask_app.register_blueprint(auth, urlprefix='/')
 
     #Create login manager to handle user logins
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
-    login_manager.init_app(app)
-      
+    login_manager.init_app(flask_app)
+    
+    #Define how login manager can load users
+    from data.models import User
     @login_manager.user_loader
     def load_user(id):
-        return User.query.get(int(id))
+        return db.session.query(User).get(int(id))
 
-    return app
+    #Register dashboards
+    from .dashapps import create_dashboards
+    create_dashboards(flask_app)
 
-#Create a database if it does not already exist
-def create_database(app):
-    if not path.exists('webapp/' + DB_NAME):
-        db.create_all(app=app)
-        logging.info('Created Webapp Database')
+    return flask_app

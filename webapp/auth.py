@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .models import User
+from data.models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user 
@@ -17,7 +17,7 @@ def login():
         password = request.form.get('password')
 
         #Search database for user with matching email
-        user = User.query.filter_by(email=email).first()
+        user = db.session.query(User).filter(User.email==email).first()
         #If that user is found, else flash error
         if user:
             #If password is correct, else flash error
@@ -51,7 +51,7 @@ def signup():
         password2 = request.form.get('password2')
 
         #Respond based on input, else is called if account creation is successful
-        user = User.query.filter_by(email=email).first()
+        user = db.session.query(User).filter(User.email==email).first()
         if user:
             flash('Email already exists', category='error')
         elif len(email) <= 4:
@@ -69,6 +69,7 @@ def signup():
             db.session.add(new_user)
             db.session.commit()
             #Flash to user and redirect them to the home page
+            login_user(new_user, remember=True)
             flash('Account created!', category='success')
             logging.info(f'New account created, email:{email}, username:{username}')
             return redirect(url_for('views.home'))

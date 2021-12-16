@@ -1,0 +1,11 @@
+#Ignore environment file
+.env
+
+#Ignore logging files
+*.log
+
+#Ignore bytecode
+*.pyc
+
+#Ignore text
+*.txt

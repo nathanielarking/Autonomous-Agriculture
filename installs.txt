@@ -1,3 +1,7 @@
 pip install flask
 pip install flask-login
 pip install flask-sqlalchemy
+pip install sqlalchemy
+pip install dash
+pip install pandas
+pip install python-dotenv

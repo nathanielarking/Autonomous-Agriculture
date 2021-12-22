@@ -6,7 +6,7 @@
  I've completed a few different stages of the project:
 
  1. Integrate soil temperature sensor into excel sheet containing calendar of plant specific temperature data
- 2. Convert software into a pthon webapp, eventually run on raspberry pi (in progress)
+ 2. Convert software into a python webapp, eventually run on raspberry pi (in progress)
 
  I have a YouTube channel called Total Veganic Futurism: https://www.youtube.com/channel/UCAqBLkDrMsOQne8CkS79JMg
 

@@ -9,29 +9,18 @@ def serve_layout():
     border_color = palette['border']
 
     #Import the Plant database, drop the ID column
-    from data.interface import get_frame, csv_to_sql
-    csv_to_sql()
-    df = get_frame('Plant')
-    df = df.drop('Index', axis=1)
-    
+    df = pd.read_json('data/frost_dates.json')
+    print(df)
     layout = html.Div([
         
         dash_table.DataTable(
-            id='attributes-table',
+            id='frost_dates_table',
             columns=[
                 {"name": i, "id": i, "deletable": False, "selectable": False, "hideable": False}
                 for i in df.columns
             ],
             data=df.to_dict('records'),
-            editable=True, #allows editing
-            filter_action="native", #Allows filtering 
-            sort_action="native", #Allows sorting
-            sort_mode="multi", #Sorts a single column at a time or multi columns
-            column_selectable="none", #Allows/disallows the selecting of rows/columns
-            row_deletable=True, #Allows deletion of rows
-            page_action="native",
-            page_current=0, #Default start is on first page
-            page_size=45,
+            editable=True,
             style_data_conditional=[
                 {
                     'if': {'row_index': 'odd'},
@@ -54,12 +43,6 @@ def serve_layout():
                 'color': palette['text_title'],
                 'fontWeight': 'bold'
             },
-            style_cell_conditional=[
-                {
-                    'if': {'column_id': c},
-                    'textAlign': 'left'
-                } for c in ['name', 'active', 'start', 'season']
-            ],
             style_cell={
                 'minWidth': 95, 'maxWidth': 95, 'width': 95,
                 'font-family': 'monospace',

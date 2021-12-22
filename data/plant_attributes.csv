@@ -1,26 +1,24 @@
 name,active,start,season,min_temp,max_temp,spring_sow,spring_transplant,fall_sow,cal_g
-Pepper,True,Indoors,Warm,17,35,-56,21,0,0.26
-Zucchini,True,Direct,Warm,17,35,21,0,0,0.16
-Pole bean,True,Direct,Warm,16,35,14,0,0,0.31
-Tomato,True,Indoors,Warm,17,35,-42,21,0,0.18
-Squash,True,Indoors,Warm,17,35,0,21,0,0.4
-Broccoli,True,Indoors,Cool,10,22,-42,-14,-85,0.34
-Kale,True,Indoors,Cool,10,26,-42,-21,-54,0.5
-Spinach,True,Direct,Cool,5,20,-21,0,-7,0.23
-Cabbage,True,Indoors,Cool,8,30,-56,-21,-135,0.24
-Lettuce,True,Indoors,Cool,8,22,-42,-21,-56,0.14
-Cauliflower,True,Indoors,Cool,13,30,-35,-14,-42,0.25
-Carrot,True,Direct,Cool,10,28,-21,0,-70,0.41
-Onion,True,Indoors,Cool,9,20,-70,-28,-42,0.42
-Sweet potato,True,Indoors,Warm,18,35,-28,28,0,0.86
-Garlic,True,Direct,Cool,0,35,-28,0,-7,1.49
-Potato,False,Direct,Warm,9,35,-28,0,0,1.04
-Basil,True,Indoors,Warm,16,35,-42,21,0,0.27
-Thyme,True,Indoors,Warm,15,35,-63,21,0,1.01
-Sage,True,Indoors,Warm,16,35,-42,7,0,1.01
-Cilantro,True,Direct,Warm,15,35,14,0,0,0.23
-Parsley,True,Indoors,Warm,15,35,-56,-21,0,0.23
-Dill,True,Direct,Warm,15,35,14,0,0,0.23
-Calendula,False,Direct,Warm,16,35,14,0,0,0.0
-Wildflowers,False,Direct,Warm,16,35,14,0,0,0.0
-Nasturstium,False,Direct,Warm,16,35,14,0,0,0.0
+Pepper,1,Indoors,Warm,17,35,-56,21,0,0.26
+Zucchini,1,Direct,Warm,17,35,21,0,0,0.16
+Pole bean,1,Direct,Warm,16,35,14,0,0,0.31
+Tomato,1,Indoors,Warm,17,35,-42,21,0,0.18
+Squash,1,Indoors,Warm,17,35,0,21,0,0.4
+Broccoli,1,Indoors,Cool,10,22,-42,-14,-85,0.34
+Kale,1,Indoors,Cool,10,26,-42,-21,-54,0.5
+Spinach,1,Direct,Cool,5,20,-21,0,-7,0.23
+Cabbage,1,Indoors,Cool,8,30,-56,-21,-135,0.24
+Lettuce,1,Indoors,Cool,8,22,-42,-21,-56,0.14
+Cauliflower,1,Indoors,Cool,13,30,-35,-14,-42,0.25
+Carrot,1,Direct,Cool,10,28,-21,0,-70,0.41
+Onion,1,Indoors,Cool,9,20,-70,-28,-42,0.42
+Sweet potato,1,Indoors,Warm,18,35,-28,28,0,0.86
+Garlic,1,Direct,Cool,0,35,-28,0,-7,1.49
+Potato,0,Direct,Warm,9,35,-28,0,0,1.04
+Basil,1,Indoors,Warm,16,35,-42,21,0,0.27
+Thyme,1,Indoors,Warm,15,35,-63,21,0,1.01
+Sage,1,Indoors,Warm,16,35,-42,7,0,1.01
+Cilantro,1,Direct,Warm,15,35,14,0,0,0.23
+Parsley,1,Indoors,Warm,15,35,-56,-21,0,0.23
+Dill,1,Direct,Warm,15,35,14,0,0,0.23
+Wildflowers,0,Direct,Warm,16,35,14,0,0,0.0

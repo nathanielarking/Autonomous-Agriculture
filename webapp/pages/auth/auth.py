@@ -1,14 +1,19 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from data.models import User
 from werkzeug.security import generate_password_hash, check_password_hash
-from . import db
+from webapp import db
 from flask_login import login_user, login_required, logout_user, current_user 
 import logging
 
-#Create blueprint object to hold URLs
-auth = Blueprint('auth', __name__)
+#Import colors to insert into the CSS
+from webapp.templates.app.colors import palette
 
-@auth.route('/login', methods=['GET', 'POST'])
+#Create blueprint object to hold URLs
+auth_blueprint = Blueprint('auth_blueprint', __name__,
+    template_folder='templates',
+    static_folder='static')
+
+@auth_blueprint.route('/auth/login', methods=['GET', 'POST'])
 def login():
     #When a message is sent with the POST form, AKA the form submission
     if request.method =='POST':
@@ -25,22 +30,22 @@ def login():
                 flash('Successfully logged in!', category='success')
                 login_user(user, remember=True)
                 logging.info(f'User logged in, email:{email}, username:{user.username}')
-                return redirect(url_for('views.home'))
+                return redirect(url_for('home_blueprint.home'))
             else:
                 flash('Incorrect password', category='error')
         else:
             flash('Email does not exist', category='error')
 
-    return render_template('login.html', user=current_user)
+    return render_template('auth/login.html', user=current_user, palette=palette)
 
-@auth.route('/logout')
+@auth_blueprint.route('/auth/logout')
 @login_required
 def logout():
     logging.info(f'User logged out, email:{current_user.email}, username:{current_user.username}')
     logout_user()
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('auth_blueprint.login'))
 
-@auth.route('/signup', methods=['GET', 'POST'])
+@auth_blueprint.route('/auth/signup', methods=['GET', 'POST'])
 def signup():
     #When a message is sent with the POST form, AKA the form submission
     if request.method == 'POST':
@@ -72,6 +77,6 @@ def signup():
             login_user(new_user, remember=True)
             flash('Account created!', category='success')
             logging.info(f'New account created, email:{email}, username:{username}')
-            return redirect(url_for('views.home'))
+            return redirect(url_for('home_blueprint.home'))
 
-    return render_template('signup.html', user=current_user)
+    return render_template('auth/signup.html', user=current_user, palette=palette)

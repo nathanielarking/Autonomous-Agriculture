@@ -1,0 +1,100 @@
+{% block css %}
+<style>
+    
+:root {
+
+--col-navbar: {{palette['navbar']}};
+--col-sidebar: {{palette['sidebar']}};
+--col-background: {{palette['background']}};
+--col-text_title: {{palette['text_title']}};
+--col-text_body: {{palette['text_body']}};
+--col-text_light: {{palette['text_light']}};
+--col-col0: {{palette['col0']}};
+--col-col1: {{palette['col1']}};
+--col-col2: {{palette['col2']}};
+--col-border: {{palette['border']}};
+
+}
+
+.body {
+
+margin-top: 4%;
+margin-right: 20%;
+margin-bottom: 10%;
+margin-left: 20%;
+font-smooth: always;
+min-height: 100%;
+
+}
+
+
+.dash {
+
+border: 5px solid var(--col-border);
+border-radius: 3px;
+background-color:var(--col-col0);
+
+}
+
+.body_style{
+
+color:var(--col-text_body);
+background-color:var(--col-background);
+
+}
+
+.nav_style{
+
+background-color:var(--col-navbar);
+color:var(--col-text_title);
+
+}
+
+/* The sidebar menu */
+.sidenav {
+width: 200px; /* Set the width of the sidebar */
+left: 0;
+background-color: var(--col-sidebar); /* Black */
+overflow-x: hidden; /* Disable horizontal scroll */
+text-align: center;
+}
+.sticky-offset {
+top: 60px;
+}
+
+/* The navigation menu links */
+.sidenav a {
+padding: 6px 8px 6px 16px;
+text-decoration: none;
+font-size: 25px;
+color: var(--col-text_light);
+display: block;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+color: var(--col-text_body);
+}
+
+.title{
+font-family:'Tahoma';
+color: var(--col-text_title);
+}
+
+.foot{
+    background-color: var(--col-navbar);
+    color: var(--col-text_light);
+    text-align: center;
+    padding: 10px;
+}
+
+.foot a:hover {
+color: var(--col-text_body);
+}
+
+input[type=text] {
+padding: 3px;
+}
+
+</style>
+{% endblock %}

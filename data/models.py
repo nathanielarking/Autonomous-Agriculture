@@ -33,11 +33,6 @@ class Plant(Base):
     @classmethod
     def get_first(cls, session, name):
         return session.query(cls).filter_by(name=name).first()
-    
-    @classmethod
-    def get_all(cls, session):
-        return session.query(cls).fetchall()
-
 
 #Class to store sensor data in a database
 

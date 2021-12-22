@@ -20,15 +20,21 @@ container = dash_container()
 def create_dashboards(flask_app):
 
     #Create attributes dashboard
-    from .attributes.layout import layout as attributes_layout
+    from .attributes.layout import serve_layout as attributes_serve_layout
     from .attributes.callbacks import register_callbacks as attributes_register_callbacks
-    attributes_dash = register_dashapp(flask_app, 'Attributes', 'attributes/', attributes_layout, attributes_register_callbacks)
+    attributes_dash = register_dashapp(flask_app, 'attributes', 'settings/', attributes_serve_layout, attributes_register_callbacks)
     container.add('attributes', attributes_dash)
+
+    #Create frost_dates dashboard
+    from .frost_dates.layout import serve_layout as frost_dates_serve_layout
+    from .frost_dates.callbacks import register_callbacks as frost_dates_register_callbacks
+    frost_dates_dash = register_dashapp(flask_app, 'frost_dates', 'settings/frost_dates/', frost_dates_serve_layout, frost_dates_register_callbacks)
+    container.add('frost_dates', frost_dates_dash)
 
     #Create harvest dashboard
     from .harvest.layout import layout as harvest_layout
     from .harvest.callbacks import register_callbacks as harvest_register_callbacks
-    harvest_dash = register_dashapp(flask_app, 'Harvest', 'harvest/', harvest_layout, harvest_register_callbacks)
+    harvest_dash = register_dashapp(flask_app, 'harvest', 'harvest/', harvest_layout, harvest_register_callbacks)
     container.add('harvest', harvest_dash)
 
 #Code to register an individual dashboard
@@ -40,7 +46,7 @@ def register_dashapp(app, title, base_path, layout, register_callbacks):
     new_dash = dash.Dash(__name__,
                         server=app,
                         url_base_pathname=f'/{base_path}',
-                        assets_folder=get_root_path(__name__) + f'/{base_path}/assets/',
+                        assets_url_path=f'{get_root_path(__name__)}/assets/',
                         meta_tags=[meta_viewport])
     
     #Assign variables to new dash

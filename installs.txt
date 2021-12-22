@@ -5,3 +5,4 @@ pip install sqlalchemy
 pip install dash
 pip install pandas
 pip install python-dotenv
+pip install plotly

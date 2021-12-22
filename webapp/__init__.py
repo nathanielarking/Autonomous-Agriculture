@@ -26,14 +26,22 @@ def create_webapp():
     db.init_app(flask_app)
 
     #Import and assign objects from blueprint files
-    from .views import views
-    from .auth import auth
-    flask_app.register_blueprint(views, urlprefix='/')
-    flask_app.register_blueprint(auth, urlprefix='/')
+    from .pages.home.home import home_blueprint
+    flask_app.register_blueprint(home_blueprint, urlprefix='/')
+    from .pages.auth.auth import auth_blueprint
+    flask_app.register_blueprint(auth_blueprint, urlprefix='/auth')
+    from .pages.calendar.calendar import calendar_blueprint
+    flask_app.register_blueprint(calendar_blueprint, urlprefix='/calendar')
+    from .pages.sensors.sensors import sensors_blueprint
+    flask_app.register_blueprint(sensors_blueprint, urlprefix='/sensors')
+    from .pages.harvest.harvest import harvest_blueprint
+    flask_app.register_blueprint(harvest_blueprint, urlprefix='/harvest')
+    from .pages.settings.settings import settings_blueprint
+    flask_app.register_blueprint(settings_blueprint, urlprefix='/settings')
 
     #Create login manager to handle user logins
     login_manager = LoginManager()
-    login_manager.login_view = 'auth.login'
+    login_manager.login_view = 'auth_blueprint.login'
     login_manager.init_app(flask_app)
     
     #Define how login manager can load users

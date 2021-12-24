@@ -10,7 +10,7 @@ def serve_layout():
 
     #Import the Plant database, drop the ID column
     df = pd.read_json('data/frost_dates.json')
-    print(df)
+ 
     layout = html.Div([
         
         dash_table.DataTable(

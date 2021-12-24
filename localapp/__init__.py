@@ -19,10 +19,8 @@ engine = create_engine(f'sqlite:///data/{DB_NAME}', echo=True)
 def create_localapp():
 
     #Create it if it does not already exist
-    from data.models import User, Plant
-    if not path.exists('data/' + DB_NAME):
-        Base.metadata.create_all(bind=engine)
-        logging.info('Created Webapp Database')
+    from data.models import User, Plant, TempReading
+    Base.metadata.create_all(bind=engine)
 
     #Session = sessionmaker(bind=engine)
     #session = Session()

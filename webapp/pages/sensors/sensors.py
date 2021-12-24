@@ -10,8 +10,23 @@ sensors_blueprint = Blueprint('sensors_blueprint', __name__,
     template_folder='templates',
     static_folder='static')
 
-#Route to view the sensor data
-@sensors_blueprint.route('/sensors/')
+#Route to view the sensor graphs
+@sensors_blueprint.route('/sensors/graphs')
 @login_required
-def sensors():
-    return render_template('sensors/sensors.html', user=current_user, palette=palette)
+def graphs():
+    dash_html = dashboards.get('sensor_graphs').index()
+    return render_template('sensors/graphs.html', user=current_user, dash_html=dash_html, palette=palette)
+
+#Route to view the sensor data
+@sensors_blueprint.route('/sensors/summary')
+@login_required
+def summary():
+    dash_html = dashboards.get('sensor_summary').index()
+    return render_template('sensors/summary.html', user=current_user, dash_html=dash_html, palette=palette)
+
+#Route to view the sensor data
+@sensors_blueprint.route('/sensors/data')
+@login_required
+def data():
+    dash_html = dashboards.get('sensor_data').index()
+    return render_template('sensors/data.html', user=current_user, dash_html=dash_html, palette=palette)

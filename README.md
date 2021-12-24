@@ -8,6 +8,11 @@
  1. Integrate soil temperature sensor into excel sheet containing calendar of plant specific temperature data
  2. Convert software into a python webapp, eventually run on raspberry pi (in progress)
 
+ The project is split into a few different folder:
+ 1. data/ is the directory where I've put my sqlite database as well as any other files, as well as a module of functions to use with my database
+ 2. webapp/ is the directory where I've put my flask application, and dashapps/ is where I've put my dash applications. The dash applications are converted to html and displayed into flash with render_template
+ 3. localapp/ is the directory where I've put the part of the project that will talk to my sensors
+
  I have a YouTube channel called Total Veganic Futurism: https://www.youtube.com/channel/UCAqBLkDrMsOQne8CkS79JMg
 
  My linkedin: https://www.linkedin.com/in/nathaniel-king-33a28a1b1/

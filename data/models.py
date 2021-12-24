@@ -1,5 +1,6 @@
 from localapp import Base
-from sqlalchemy import Column, Integer, String, Boolean, Float
+from sqlalchemy import Column, Integer, String, Boolean, Float, DateTime, Date, ForeignKey
+from sqlalchemy.orm import relationship
 from flask_login import UserMixin
 
 #Class to store userdata for webapp
@@ -35,5 +36,31 @@ class Plant(Base):
         return session.query(cls).filter_by(name=name).first()
 
 #Class to store sensor data in a database
+class TempReading(Base):
+
+    __tablename__ = "TempReading"
+
+    id = Column(Integer, primary_key=True)
+    group = Column(String(15))
+    datetime = Column(DateTime, nullable=False)
+    value = Column(Float, nullable=False)
+
+    TempFile_id = Column(Integer, ForeignKey('TempFile.id'))
+    TempFile = relationship("TempFile", back_populates="readings")
+
+#Class to file temperature values and find the average, minimum, and maximum
+class TempFile(Base):
+
+    __tablename__ = "TempFile"
+
+    id = Column(Integer, primary_key=True)
+    group = Column(String(15))
+    date = Column(Date, nullable=False, unique=True)
+    readings = relationship("TempReading", back_populates="TempFile")
+
+    min = Column(Float)
+    max = Column(Float)
+    avg = Column(Float)
+    rate = Column(Float)
 
 #Class to store harvest data in a database

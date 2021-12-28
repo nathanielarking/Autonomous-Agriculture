@@ -1,0 +1,24 @@
+{% extends "app/base.html" %}
+
+{% block title %}Calendar Chart | Autonomous Agriculture{% endblock %}
+
+
+{% block content %}
+<div class="row">
+    <div id="sidebar-container" class="sidebar-expanded d-none d-md-block sidenav">
+        <ul class="list-group sticky-top">
+            <a href="/calendar/chart">Chart</a>
+        </ul>
+    </div>
+    <div class="col">
+        <div class="body">
+            <div class="dash">
+                <h1 class="title">
+                    Chart
+                </h1>
+                {{dash_html|safe}}</div>
+            <br>
+        </div>
+    </div>
+</div>
+{% endblock %}

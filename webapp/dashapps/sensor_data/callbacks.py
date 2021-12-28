@@ -1,5 +1,5 @@
 from dash.dependencies import Input, Output
-from .layout import summary_layout, raw_layout
+
 
 def register_callbacks(dashapp):
 

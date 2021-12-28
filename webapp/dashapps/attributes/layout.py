@@ -12,7 +12,7 @@ def serve_layout():
     from data.interface import get_frame, csv_to_sql
     csv_to_sql()
     df = get_frame('Plant')
-    df = df.drop('Index', axis=1)
+    df = df.drop('id', axis=1)
     
     layout = html.Div([
         

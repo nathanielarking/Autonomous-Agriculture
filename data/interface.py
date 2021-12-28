@@ -1,10 +1,10 @@
 import pandas as pd
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, sessionmaker
 from .models import Plant, TempReading, TempFile
 import logging
 from datetime import date
 
-from localapp import engine
+from . import engine
 
 #This file updates the TempFile table with all the new values from the TempReading table
 def update_temp_file():
@@ -53,7 +53,6 @@ def csv_to_sql_data():
     csv = pd.read_csv('data/allData.csv')
     csv.columns=['year', 'month', 'day', 'hour', 'offset', 'temp']
 
-    from sqlalchemy.orm import sessionmaker
     Session = sessionmaker(bind=engine)
 
     with Session() as session:
@@ -68,10 +67,10 @@ def csv_to_sql_data():
 def csv_to_sql():
 
     csv = pd.read_csv('data/plant_attributes.csv')
-    logging.info('Printed a plant_attributes csv into sql')
+    csv.columns=['name', 'active', 'start', 'season', 'min_temp', 'max_temp', 'spring_sow', 'spring_transplant', 'fall_sow', 'cal_g']
 
     with engine.begin() as connection:
-        csv.to_sql('Plant', con=connection, if_exists='replace', index_label='Index')
+        csv.to_sql('Plant', con=connection, if_exists='replace', index_label='id')
 
 
 #This function pushes a pandas dataframe into the plants SQL database
@@ -80,7 +79,7 @@ def df_to_sql(df):
     logging.info('Printed a plant_attributes dataframe into sql')
 
     with engine.begin() as connection:
-        df.to_sql('Plant', con=connection, if_exists='replace', index_label='Index')
+        df.to_sql('Plant', con=connection, if_exists='replace', index_label='id')
 
 #This function will convert the SQL plant database to csv so that it can be manually edited
 def sql_to_csv():

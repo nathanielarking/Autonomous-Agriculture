@@ -1,28 +1,17 @@
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-from os import path
-import logging
-
-#Import environment variables
-import os
-from dotenv import load_dotenv, find_dotenv
-load_dotenv(find_dotenv())
-DB_NAME = str(os.getenv('DATABASE_NAME'))
-
-#Create object for interacting with SQL database
-Base = declarative_base()
-
-#connect database object to database
-engine = create_engine(f'sqlite:///data/{DB_NAME}', echo=True)
+from data import engine, init_engine
 
 def create_localapp():
 
-    #Create it if it does not already exist
-    from data.models import User, Plant, TempReading
-    Base.metadata.create_all(bind=engine)
+    init_engine()
 
-    #Session = sessionmaker(bind=engine)
-    #session = Session()
+    from data.interface import csv_to_sql, csv_to_sql_data, update_temp_file
+
+    #Add plant attributes into database
+    #csv_to_sql()
+    #Add sensor data into database and update file table
+    #csv_to_sql_data()
+    #update_temp_file()
+
+    pass
 
     

@@ -7,6 +7,24 @@ from datetime import datetime
 #Have to predefine the table border as it doesn't allow string formatting
 border_color = palette['border']
 
+#Have to define styles in this file so python can import the colors
+tabs_style = {
+    'height': '44px'
+}
+tab_style = {
+    'border': f'1px solid {border_color}',
+    'backgroundColor': palette['col2'],
+    'color': palette['text_title'],
+    'padding': '6px'
+}
+
+tab_selected_style = {
+    'border': f'1px solid {border_color}',
+    'backgroundColor': palette['col3'],
+    'color': palette['text_body'],
+    'fontWeight': 'bold',
+    'padding': '6px'
+}
 
 #Import the tempfile database, drop the ID and group columns
 from data.interface import get_frame
@@ -36,9 +54,9 @@ def serve_layout():
 
     layout = html.Div([
 
-        dcc.Tabs(id='data-tabs', value='summary-tab', children=[
-            dcc.Tab(label='summary-tab', value='summary-tab'),
-            dcc.Tab(label='raw-tab', value='raw-tab')
+        dcc.Tabs(id='data-tabs', value='summary-tab', style=tabs_style, children=[
+            dcc.Tab(label='Summary', value='summary-tab', style=tab_style, selected_style = tab_selected_style),
+            dcc.Tab(label='Hourly', value='raw-tab', style=tab_style, selected_style = tab_selected_style)
         ]),
         html.Div(id='block-content')
 

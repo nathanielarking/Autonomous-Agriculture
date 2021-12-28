@@ -1,4 +1,4 @@
-from localapp import Base
+from . import Base
 from sqlalchemy import Column, Integer, String, Boolean, Float, DateTime, Date, ForeignKey
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin
@@ -20,8 +20,8 @@ class Plant(Base):
     __tablename__ = "Plant"
 
     id = Column(Integer, primary_key=True)
-    name = Column(String(100), unique=True)
-    active = Column(Boolean)
+    name = Column(String(100), unique=True, nullable = False)
+    active = Column(Boolean, nullable=False)
     start = Column(String(10))
     season = Column(String(5))
     min_temp = Column(Integer)
@@ -30,10 +30,6 @@ class Plant(Base):
     spring_transplant = Column(Integer)
     fall_sow = Column(Integer)
     cal_g = Column(Float)
-
-    @classmethod
-    def get_first(cls, session, name):
-        return session.query(cls).filter_by(name=name).first()
 
 #Class to store sensor data in a database
 class TempReading(Base):

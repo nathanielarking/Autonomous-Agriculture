@@ -11,7 +11,8 @@ calendar_blueprint = Blueprint('calendar_blueprint', __name__,
     static_folder='static')
 
 #Route to view the generated planting calendar
-@calendar_blueprint.route('/calendar/')
+@calendar_blueprint.route('/calendar/chart')
 @login_required
-def calendar():
-    return render_template('calendar/calendar.html', user=current_user, palette=palette)
+def chart():
+    dash_html = dashboards.get('calendar_chart').index()
+    return render_template('calendar/chart.html', user=current_user, palette=palette, dash_html=dash_html)

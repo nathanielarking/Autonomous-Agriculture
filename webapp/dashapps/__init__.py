@@ -43,6 +43,12 @@ def create_dashboards(flask_app):
     sensor_data_dash = register_dashapp(flask_app, 'sensor_data', 'sensors/data/', sensor_data_serve_layout, sensor_data_register_callbacks)
     container.add('sensor_data', sensor_data_dash)
 
+    #Create sensor data dashboard
+    from .calendar_chart.layout import serve_layout as calendar_chart_serve_layout
+    from .calendar_chart.callbacks import register_callbacks as calendar_chart_register_callbacks
+    calendar_chart_dash = register_dashapp(flask_app, 'calendar_chart', 'calendar/chart/', calendar_chart_serve_layout, calendar_chart_register_callbacks)
+    container.add('calendar_chart', calendar_chart_dash)
+
 #Code to register an individual dashboard
 def register_dashapp(app, title, base_path, layout, register_callbacks):
     #Meta tags for viewport responsiveness

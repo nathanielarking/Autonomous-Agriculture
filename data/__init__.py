@@ -14,15 +14,17 @@ DB_NAME = str(os.getenv('DATABASE_NAME'))
 Base = declarative_base()
 
 #connect database object to database
-engine = create_engine(f'sqlite:///data/{DB_NAME}', echo=True)
+engine = create_engine(f'sqlite:///data/{DB_NAME}', echo=False)
 
 def init_engine():
 
     #Create it if it does not already exist
-    from data.models import User, Plant, TempReading, TempFile
+    from data.models import User, Plant, TempReading, TempFile, HarvestEntry
     Base.metadata.create_all(bind=engine)
 
     #Session = sessionmaker(bind=engine)
     #session = Session()
+
+    #session.query(model).delete()
 
     

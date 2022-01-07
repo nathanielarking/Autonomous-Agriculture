@@ -43,11 +43,23 @@ def create_dashboards(flask_app):
     sensor_data_dash = register_dashapp(flask_app, 'sensor_data', 'sensors/data/', sensor_data_serve_layout, sensor_data_register_callbacks)
     container.add('sensor_data', sensor_data_dash)
 
-    #Create sensor data dashboard
+    #Create calendar chart dashboard
     from .calendar_chart.layout import serve_layout as calendar_chart_serve_layout
     from .calendar_chart.callbacks import register_callbacks as calendar_chart_register_callbacks
     calendar_chart_dash = register_dashapp(flask_app, 'calendar_chart', 'calendar/chart/', calendar_chart_serve_layout, calendar_chart_register_callbacks)
     container.add('calendar_chart', calendar_chart_dash)
+
+    #Create harvest graphs dashboard
+    from .harvest_graphs.layout import serve_layout as harvest_graphs_serve_layout
+    from .harvest_graphs.callbacks import register_callbacks as harvest_graphs_register_callbacks
+    harvest_graphs_dash = register_dashapp(flask_app, 'harvest_graphs', 'harvest/graphs/', harvest_graphs_serve_layout, harvest_graphs_register_callbacks)
+    container.add('harvest_graphs', harvest_graphs_dash)
+
+    #Create harvest data dashboard
+    from .harvest_data.layout import serve_layout as harvest_data_serve_layout
+    from .harvest_data.callbacks import register_callbacks as harvest_data_register_callbacks
+    harvest_data_dash = register_dashapp(flask_app, 'harvest_data', 'harvest/data/', harvest_data_serve_layout, harvest_data_register_callbacks)
+    container.add('harvest_data', harvest_data_dash)
 
 #Code to register an individual dashboard
 def register_dashapp(app, title, base_path, layout, register_callbacks):

@@ -1,0 +1,25 @@
+{% extends "app/base.html" %}
+
+{% block title %}Harvest Graphs | Autonomous Agriculture{% endblock %}
+
+
+{% block content %}
+<div class="row">
+    <div id="sidebar-container" class="sidebar-expanded d-none d-md-block sidenav">
+        <ul class="list-group sticky-top">
+            <a href="/harvest/graphs">Graphs</a>
+            <a href="/harvest/data">Data</a>
+        </ul>
+    </div>
+    <div class="col">
+        <div class="body">
+            <div class="dash">
+                <h1 class="title">
+                    Graphs
+                </h1>
+                {{dash_html|safe}}</div>
+            <br>
+        </div>
+    </div>
+</div>
+{% endblock %}

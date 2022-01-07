@@ -1,7 +1,6 @@
-from dash import dcc, html
-from dash_table.Format import Format
+from dash import dcc, html, dash_table
 import pandas as pd
-from webapp.templates.app.colors import palette
+from webapp.templates.app.colors import palette, picker_style, dropdown_style
 from sqlalchemy.orm import sessionmaker
 from data import engine
 from data.models import Plant
@@ -15,15 +14,6 @@ pio.templates['custom_template'] = go.layout.Template(
     layout_plot_bgcolor=palette['col3']
 )
 pio.templates.default = 'plotly_dark+custom_template'
-
-#Define custom styles for other components
-picker_style = {
-    'backgroundColor': palette['col4']
-}
-dropdown_style = {
-    'backgroundColor': palette['col4'],
-    'borderColor': palette['border']
-}
 
 #Layout is defined in a serve_layout function rather than on its own to ensure the data updates on page refresh. See the Live Updates section on the Dash documentation
 def serve_layout():

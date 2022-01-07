@@ -10,9 +10,16 @@ harvest_blueprint = Blueprint('harvest_blueprint', __name__,
     template_folder='templates',
     static_folder='static')
 
-#Route to view and edit harvest data
-@harvest_blueprint.route('/harvest/')
+#Route to view the harvest graphs
+@harvest_blueprint.route('/harvest/graphs')
 @login_required
-def harvest():  
-    return dashboards.get('harvest').index()
-    #return render_template('harvest.html', user=current_user)
+def graphs():
+    dash_html = dashboards.get('harvest_graphs').index()
+    return render_template('harvest/graphs.html', user=current_user, dash_html=dash_html, palette=palette)
+
+#Route to view the harvest data
+@harvest_blueprint.route('/harvest/data')
+@login_required
+def data():
+    dash_html = dashboards.get('harvest_data').index()
+    return render_template('harvest/data.html', user=current_user, dash_html=dash_html, palette=palette)

@@ -31,6 +31,8 @@ class Plant(Base):
     fall_sow = Column(Integer)
     cal_g = Column(Float)
 
+    harvests = relationship("HarvestEntry", back_populates="Plant")
+
 #Class to store sensor data in a database
 class TempReading(Base):
 
@@ -60,3 +62,11 @@ class TempFile(Base):
     rate = Column(Float)
 
 #Class to store harvest data in a database
+class HarvestEntry(Base):
+
+    __tablename__ = "HarvestEntry"
+    id = Column(Integer, primary_key=True)
+    Plant_id = Column(Integer, ForeignKey('Plant.id'))
+    Plant = relationship("Plant", back_populates="harvests")
+    mass = Column(Float)
+    date = Column(Date)

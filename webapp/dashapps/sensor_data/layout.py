@@ -1,30 +1,11 @@
 from dash import dcc, html, dash_table
-from dash_table.Format import Format
+from dash.dash_table.Format import Format
 import pandas as pd
-from webapp.templates.app.colors import palette
+from webapp.templates.app.colors import palette, tab_style, tabs_style, tab_selected_style
 from datetime import datetime
 
 #Have to predefine the table border as it doesn't allow string formatting
 border_color = palette['border']
-
-#Have to define styles in this file so python can import the colors
-tabs_style = {
-    'height': '44px'
-}
-tab_style = {
-    'border': f'1px solid {border_color}',
-    'backgroundColor': palette['col2'],
-    'color': palette['text_title'],
-    'padding': '6px'
-}
-
-tab_selected_style = {
-    'border': f'1px solid {border_color}',
-    'backgroundColor': palette['col3'],
-    'color': palette['text_body'],
-    'fontWeight': 'bold',
-    'padding': '6px'
-}
 
 #Import the tempfile database, drop the ID and group columns
 from data.interface import get_frame

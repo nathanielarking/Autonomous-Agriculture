@@ -8,7 +8,7 @@ def serve_layout():
     #Have to predefine the table border as it doesn't allow string formatting
     border_color = palette['border']
 
-    #Import the Plant database, drop the ID column
+    #Import the frost dates from file
     df = pd.read_json('data/frost_dates.json')
  
     layout = html.Div([

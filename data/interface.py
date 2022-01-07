@@ -1,6 +1,6 @@
 import pandas as pd
 from sqlalchemy.orm import Session, sessionmaker
-from .models import Plant, TempReading, TempFile
+from .models import Plant, TempReading, TempFile, HarvestEntry
 import logging
 from datetime import date
 
@@ -47,7 +47,7 @@ def update_temp_file():
 
 
 #This function dumps the sensor data from a csv file into the database. Should only be needed once (when the database is created)
-def csv_to_sql_data():
+def csv_to_sql_temp_data():
 
     from datetime import datetime, timedelta
     csv = pd.read_csv('data/allData.csv')
@@ -61,6 +61,24 @@ def csv_to_sql_data():
             date = date + timedelta(hours=int(row[1][4]))
             new_reading = TempReading(group='soil', datetime=date, value=row[1][5])
             session.add(new_reading)
+        session.commit()
+
+#This function dumps the harvest data from a csv file into the database. Should only be needed once (when the database is created)
+def csv_to_sql_harvest_data():
+
+    from datetime import datetime
+    csv = pd.read_csv('data/harvest_data.csv')
+    csv.columns=['date', 'name', 'mass']
+
+    Session = sessionmaker(bind=engine)
+
+    with Session() as session:
+        for row in csv.iterrows():
+            date = datetime.strptime(row[1][0], '%Y-%m-%d')
+            plant = session.query(Plant).filter_by(name=row[1][1]).first()
+            
+            new_entry = HarvestEntry(Plant_id=plant.id, date=date, mass=row[1][2])
+            session.add(new_entry)
         session.commit()
 
 #This function will read the plant_attributes csv, find any differences between it and the sql database, and update the sql database

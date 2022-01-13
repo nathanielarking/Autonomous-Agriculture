@@ -6,20 +6,21 @@ from sqlalchemy.orm import Session
 from data import engine
 from data.models import HarvestEntry, Plant
 
-years = []
-#Loop through all harvest entries which contain year 
-with Session(engine) as session:
-    entries = session.query(HarvestEntry).all()
-    for entry in entries:
-        if entry.date.year not in years:
-            years.append(entry.date.year)
-options = [
-        {"label": year, "value": year}
-        for year in years
-        ]
-
 #Layout is defined in a serve_layout function rather than on its own to ensure the data updates on page refresh. See the Live Updates section on the Dash documentation
 def serve_layout():
+
+    years = []
+    #Loop through all harvest entries which contain year 
+    with Session(engine) as session:
+        entries = session.query(HarvestEntry).all()
+        for entry in entries:
+            if entry.date.year not in years:
+                years.append(entry.date.year)
+    options = [
+            {"label": year, "value": year}
+            for year in years
+            ]
+
 
     layout = html.Div([
 

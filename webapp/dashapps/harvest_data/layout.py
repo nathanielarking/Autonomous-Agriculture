@@ -10,32 +10,32 @@ from data.models import Plant
 #Have to predefine the table border as it doesn't allow string formatting
 border_color = palette['border']
 
-#Import the harvest entry database, drop the ID and group columns
-from data.interface import get_frame
-df = get_frame('HarvestEntry')
-
-#Get the names of plants and the calorie values
-names = []
-cals = []
-with Session(engine) as session:
-    for id in df['Plant_id']:
-        plant = session.query(Plant).filter_by(id=id).first()
-        names.append(plant.name)
-        cals.append(plant.cal_g)
-df['Plant'] = names
-df['Calories'] = df['mass'].multiply(cals, axis='index')
-
-#Drop unneccesary columns
-df = df.drop('id', axis=1)
-df = df.drop('Plant_id', axis=1)
-#Format columns
-df['date'] = df['date'].dt.date
-#df['Calories'] = df['Calories'].map('{:,.2f}'.format)
-df = df[['Plant', 'date', 'mass', 'Calories']]
-df = df.rename(columns={'date': 'Date', 'mass': 'Mass (g)'})
-
 #Layout is defined in a serve_layout function rather than on its own to ensure the data updates on page refresh. See the Live Updates section on the Dash documentation
 def serve_layout():
+
+    #Import the harvest entry database, drop the ID and group columns
+    from data.interface import get_frame
+    df = get_frame('HarvestEntry')
+
+    #Get the names of plants and the calorie values
+    names = []
+    cals = []
+    with Session(engine) as session:
+        for id in df['Plant_id']:
+            plant = session.query(Plant).filter_by(id=id).first()
+            names.append(plant.name)
+            cals.append(plant.cal_g)
+    df['Plant'] = names
+    df['Calories'] = df['mass'].multiply(cals, axis='index')
+
+    #Drop unneccesary columns
+    df = df.drop('id', axis=1)
+    df = df.drop('Plant_id', axis=1)
+    #Format columns
+    df['date'] = df['date'].dt.date
+    #df['Calories'] = df['Calories'].map('{:,.2f}'.format)
+    df = df[['Plant', 'date', 'mass', 'Calories']]
+    df = df.rename(columns={'date': 'Date', 'mass': 'Mass (g)'})
 
     layout = html.Div([
 

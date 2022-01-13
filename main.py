@@ -1,11 +1,10 @@
 from webapp import create_webapp
-from localapp import create_localapp
+from localapp import run_localapp
 import logging
+import threading
 
 #Create instance of flask webapp
 webapp = create_webapp()
-
-create_localapp()
 
 #Contains code to be run when executed as a script (rather than imported as a module)
 if __name__ == '__main__':
@@ -13,5 +12,9 @@ if __name__ == '__main__':
     logging.basicConfig(filename='info.log', level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s')
     logging.info('Logging begin')
 
-    #Run flask webapp
-    webapp.run(debug=True)
+    #Initialize thread to run the mqtt local application
+    localapp_thread = threading.Thread(target=run_localapp)
+    localapp_thread.start()
+
+    #Initialize thread to run the flask web application
+    webapp.run(debug=False)

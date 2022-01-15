@@ -3,6 +3,9 @@
 #include "files.h"
 #include "network.h"
 
+//This is the byte used to seperate different readings in the temp file
+const byte delimiter[1] = {','};
+
 //Initialize file system
 void init_files(){
 
@@ -13,7 +16,7 @@ void init_files(){
 
     //Initialize file system. If this fails we can't store data so restart
     if(!SPIFFS.begin()){
-        Serial.println("File system failed to mount");
+        DEBUG_SERIAL.println("File system failed to mount");
         ESP.restart();
         }
 
@@ -22,9 +25,9 @@ void init_files(){
 //Writes the given date to the date file
 void write_date(const char date[]){
 
-  Serial.print("Printing date: ");
-  Serial.print(date);
-  Serial.println(" in /date.txt");
+  DEBUG_SERIAL.print("Printing date: ");
+  DEBUG_SERIAL.print(date);
+  DEBUG_SERIAL.println(" in /date.txt");
   
   File date_file = SPIFFS.open("/date.txt", "w");
   date_file.print(date);
@@ -84,32 +87,39 @@ void increment_offset(char date[]){
 //Writes temp reading to temp file
 void write_reading(char reading[]){
 
-  Serial.print("Printing reading: ");
-  Serial.print(reading);
-  Serial.print(" which has been validated: ");
-  Serial.print(validate_reading(reading));
-  Serial.println(" in /temp.txt");
+  boolean valid = validate_reading(reading);
 
-  File temp_file = SPIFFS.open("/temp.txt", "a");
-  temp_file.print(reading);
-  delay(250);
-  temp_file.print(',');
-  temp_file.close();
+  DEBUG_SERIAL.print("Printing reading: ");
+  DEBUG_SERIAL.print(reading);
+  DEBUG_SERIAL.print(" which has been validated: ");
+  DEBUG_SERIAL.print(valid);
+  DEBUG_SERIAL.println(" in /temp.txt");
+
+  if(valid){
+    
+    File temp_file = SPIFFS.open("/temps.txt", "a");
+    temp_file.print(reading);
+    delay(250);
+    temp_file.print(',');
+    temp_file.close();
+    }
   
   }
 
 //Push all readings from temp file into mqtt, in addition to the reading passed as an argument
 void publish_readings(char last_reading[]){
   
-  File temp_file = SPIFFS.open("/temp.txt", "r");
+  File temp_file = SPIFFS.open("/temps.txt", "r");
   char reading[30];
 
   //Loop through temp file and read every line into the buffer, then publish it.
-  while(temp_file.available()){
-    int len = temp_file.readBytesUntil(',', reading, sizeof(reading)-1);
-    reading[len] = '\0';
-    publish_reading(reading);
-    delay(50);
+  if(temp_file){
+    while(temp_file.available()){
+      int len = temp_file.readBytesUntil(',', reading, sizeof(reading)-1);
+      reading[len] = '\0';
+      publish_reading(reading);
+      delay(50);
+      }
     }
 
   //Publish the remaining reading
@@ -117,7 +127,7 @@ void publish_readings(char last_reading[]){
 
   //Remove temp file so we don't store more values than needed on the ESP
   temp_file.close();
-  SPIFFS.remove("/temp.txt");
+  SPIFFS.remove("/temps.txt");
   
   }
 

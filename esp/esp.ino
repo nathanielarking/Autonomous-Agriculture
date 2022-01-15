@@ -6,19 +6,23 @@
 #include "files.h"
 
 #define ONE_HOUR 3600000000 //One hour in microseconds
+#define ONE_MINUTE 60000000 //One minutes in microseconds
+
+//Toggling this disables all serial debugging. Must be changed in every header (.h) file
+#define DEBUG false  //set to true for debug output, false for no debug output
+#define DEBUG_SERIAL if(DEBUG)Serial
 
 void setup() {
 
   //Initialize serial
-  Serial.begin(115200);
-  Serial.println();
+  DEBUG_SERIAL.begin(115200);
+  DEBUG_SERIAL.println();
   
   //Initalize file system
   init_files();
 
   //Grab sensor value
   float soil_temp = read_soil_temp();
-  delay(1);
   
   //If a successful connection is established with the MQTT broker
   if(connect_wifi() && connect_mqtt()){
@@ -51,9 +55,8 @@ void setup() {
       }
 
   //Go back to sleep
-  Serial.println("Going back to sleep...");
+  DEBUG_SERIAL.println("Going back to sleep...");
   ESP.deepSleep(ONE_HOUR); 
-  delay(1000);     
   
 }
 

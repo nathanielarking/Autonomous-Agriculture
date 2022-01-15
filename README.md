@@ -12,4 +12,5 @@
  1. data/ is the directory where I've put my sqlite database as well as any other files, as well as a module of functions to use with my database
  2. webapp/ is the directory where I've put my flask application, and dashapps/ is where I've put my dash applications. The dash applications are converted to html and displayed into flash with render_template
  3. localapp/ is the directory where I've put the part of the project that will talk to my sensors
+ 4. esp/ is the directory where I've put all the code for my ESP8266
 

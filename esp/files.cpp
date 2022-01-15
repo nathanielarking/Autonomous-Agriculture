@@ -8,7 +8,7 @@ void init_files(){
 
     //Turn off autoformatting just in case
     SPIFFSConfig cfg;
-    cfg.setAutoFormat(true);
+    cfg.setAutoFormat(false);
     SPIFFS.setConfig(cfg);
 
     //Initialize file system. If this fails we can't store data so restart
@@ -90,6 +90,7 @@ void write_reading(char reading[]){
 
   File temp_file = SPIFFS.open("/temp.txt", "a");
   temp_file.print(reading);
+  delay(50);
   temp_file.print(',');
   temp_file.close();
   

@@ -43,7 +43,7 @@ boolean connect_wifi(){
   WiFi.config(ip, gateway, subnet);
   WiFi.begin(ssid, password); //Initialize connection
 
-  long st = millis();
+  unsigned long st = millis();
 
   //Loop until wifi is connected
   while(WiFi.status() != WL_CONNECTED){ //While wifi hasn't connected
@@ -58,7 +58,7 @@ boolean connect_wifi(){
       }
   }
   
-  long elapsed = millis() - st;
+  unsigned long elapsed = millis() - st;
 
   Serial.print("\n");
   Serial.print("Connected to WiFi: ");

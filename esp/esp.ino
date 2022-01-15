@@ -12,17 +12,14 @@ void setup() {
   //Initialize serial
   Serial.begin(115200);
   Serial.println();
-
-  delay(1);
   
   //Initalize file system
   init_files();
-  delay(1);
 
   //Grab sensor value
   float soil_temp = read_soil_temp();
   delay(1);
-
+  
   //If a successful connection is established with the MQTT broker
   if(connect_wifi() && connect_mqtt()){
 
@@ -55,9 +52,9 @@ void setup() {
 
   //Go back to sleep
   Serial.println("Going back to sleep...");
-  ESP.deepSleep(120000000); 
-  delay(5000);     
-
+  ESP.deepSleep(60000000); 
+  delay(1000);     
+  
 }
 
 void loop() {}

@@ -7,11 +7,14 @@ from datetime import datetime
 #Have to predefine the table border as it doesn't allow string formatting
 border_color = palette['border']
 
+from data.interface import get_frame
+df_summary = get_frame('TempFile')
+df_raw = get_frame('TempReading')
+
 #Layout is defined in a serve_layout function rather than on its own to ensure the data updates on page refresh. See the Live Updates section on the Dash documentation
 def serve_layout():
 
     #Import the tempfile database, drop the ID and group columns
-    from data.interface import get_frame
     df_summary = get_frame('TempFile')
     df_summary = df_summary.drop('id', axis=1)
     df_summary = df_summary.drop('group', axis=1)

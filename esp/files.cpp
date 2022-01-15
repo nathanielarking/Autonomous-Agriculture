@@ -86,11 +86,13 @@ void write_reading(char reading[]){
 
   Serial.print("Printing reading: ");
   Serial.print(reading);
+  Serial.print(" which has been validated: ");
+  Serial.print(validate_reading(reading));
   Serial.println(" in /temp.txt");
 
   File temp_file = SPIFFS.open("/temp.txt", "a");
   temp_file.print(reading);
-  delay(50);
+  delay(250);
   temp_file.print(',');
   temp_file.close();
   
@@ -107,7 +109,7 @@ void publish_readings(char last_reading[]){
     int len = temp_file.readBytesUntil(',', reading, sizeof(reading)-1);
     reading[len] = '\0';
     publish_reading(reading);
-    delay(10);
+    delay(50);
     }
 
   //Publish the remaining reading
@@ -116,5 +118,21 @@ void publish_readings(char last_reading[]){
   //Remove temp file so we don't store more values than needed on the ESP
   temp_file.close();
   SPIFFS.remove("/temp.txt");
+  
+  }
+
+//Make sure that the data we have read is valid, and doesn't contain any characters that aren't supposed to be there
+boolean validate_reading(char reading[]){
+
+  //Only return true if all values are either '/', ',' or '0' to '9' and only if the reading contains the correct amount of delimeters
+  int i = 0;
+  int count = 0;
+  while(reading[i] != '\0'){
+    if(reading[i] == '/') count++;
+    if(reading[i] < '.' || reading[i++] > '9') return false;
+    } 
+      
+  if(count == 5) return true;
+  return false;
   
   }

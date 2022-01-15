@@ -37,9 +37,6 @@ boolean connect_wifi(){
   Serial.print("Connecting to: ");
   Serial.println(ssid);
 
-  //WiFi.mode(WIFI_STA);
-  //WiFi.persistent(false);
-  //WiFi.forceSleepWake();
   WiFi.config(ip, gateway, subnet);
   WiFi.begin(ssid, password); //Initialize connection
 
@@ -147,7 +144,9 @@ void on_message(const char topic[], byte* payload, unsigned int len){
 void publish_reading(char reading[]){
   
   Serial.print("Publishing reading: ");
-  Serial.println(reading);
+  Serial.print(reading);
+  Serial.print(" which has been validated: ");
+  Serial.println(validate_reading(reading));
   mqtt_client.publish("esp/sensor1", reading);
   
   }

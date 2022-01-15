@@ -52,7 +52,7 @@ void setup() {
 
   //Go back to sleep
   Serial.println("Going back to sleep...");
-  ESP.deepSleep(60000000); 
+  ESP.deepSleep(ONE_HOUR); 
   delay(1000);     
   
 }

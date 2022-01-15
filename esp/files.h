@@ -19,4 +19,7 @@ void write_reading(char reading[]);
 //Push all readings from temp file into mqtt, in addition to the reading passed as an argument
 void publish_readings(char last_reading[]);
 
+//Make sure that the data we have read is valid, and doesn't contain any characters that aren't supposed to be there
+boolean validate_reading(char reading[]);
+
 #endif

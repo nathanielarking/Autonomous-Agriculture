@@ -2,6 +2,17 @@ from data import engine, init_engine
 
 from . import mqtt
 
+def localapp_thread(run_localapp):
+    def wrapper():
+        while True:
+            try:
+                run_localapp()
+            except BaseException as e:
+                print('{!r}; restarting thread'.format(e))
+            else:
+                print('exited normally, bad thread; restarting')
+    return wrapper
+
 def run_localapp():
 
     init_engine()

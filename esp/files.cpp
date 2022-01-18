@@ -3,9 +3,6 @@
 #include "files.h"
 #include "network.h"
 
-//This is the byte used to seperate different readings in the temp file
-const byte delimiter[1] = {','};
-
 //Initialize file system
 void init_files(){
 
@@ -134,12 +131,12 @@ void publish_readings(char last_reading[]){
 //Make sure that the data we have read is valid, and doesn't contain any characters that aren't supposed to be there
 boolean validate_reading(char reading[]){
 
-  //Only return true if all values are either '/', ',' or '0' to '9' and only if the reading contains the correct amount of delimeters
+  //Only return true if all values are either '-', '/', ',' or '0' to '9' and only if the reading contains the correct amount of delimeters
   int i = 0;
   int count = 0;
   while(reading[i] != '\0'){
     if(reading[i] == '/') count++;
-    if(reading[i] < '.' || reading[i++] > '9') return false;
+    if(reading[i] < '-' || reading[i++] > '9') return false;
     } 
       
   if(count == 5) return true;

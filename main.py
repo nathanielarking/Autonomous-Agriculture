@@ -1,5 +1,7 @@
+#!/usr/bin/env python
+
 from webapp import create_webapp
-from localapp import run_localapp
+from localapp import localapp_thread
 import logging
 import threading
 
@@ -13,7 +15,7 @@ if __name__ == '__main__':
     logging.info('Logging begin')
 
     #Initialize thread to run the mqtt local application
-    localapp_thread = threading.Thread(target=run_localapp)
+    localapp_thread = threading.Thread(target=localapp_thread)
     localapp_thread.start()
 
     #Initialize thread to run the flask web application

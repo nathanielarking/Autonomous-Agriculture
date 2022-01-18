@@ -1,5 +1,6 @@
 from dash import dcc, html, dash_table
 import pandas as pd
+from data.interface import get_frost_dates
 from webapp.templates.app.colors import palette
 
 #Layout is defined in a serve_layout function rather than on its own to ensure the data updates on page refresh. See the Live Updates section on the Dash documentation
@@ -9,7 +10,7 @@ def serve_layout():
     border_color = palette['border']
 
     #Import the frost dates from file
-    df = pd.read_json('data/frost_dates.json')
+    df = get_frost_dates()
  
     layout = html.Div([
         

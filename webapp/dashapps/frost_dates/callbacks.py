@@ -1,7 +1,7 @@
 from dash.dependencies import Input, Output, State
 import pandas as pd
 import json
-from data.interface import df_to_sql, sql_to_csv
+from data.interface import df_to_sql, sql_to_csv, frost_to_json
 
 def register_callbacks(dashapp):
     #Called when changes are made to the table
@@ -12,6 +12,5 @@ def register_callbacks(dashapp):
     def update_database(timestamp, data):
         #Dump the changed data into the json file
 
-        with open('data/frost_dates.json', 'w') as file:
-            json.dump(data, file)
+        frost_to_json(data)
         return data

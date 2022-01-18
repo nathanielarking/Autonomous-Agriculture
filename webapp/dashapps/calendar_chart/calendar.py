@@ -2,13 +2,14 @@ from data import engine
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy import and_
 import pandas as pd
+from data.interface import get_frost_dates
 from data.models import Plant, TempFile
 from datetime import date, datetime, timedelta
 
 def generate_calendar(start_date, end_date):
 
     #Get frost dates
-    frost_dates = pd.read_json('data/frost_dates.json')
+    frost_dates = get_frost_dates()
 
     with Session(engine) as session:
 

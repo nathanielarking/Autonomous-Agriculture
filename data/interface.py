@@ -1,10 +1,18 @@
+import os
 import pandas as pd
 from sqlalchemy.orm import Session, sessionmaker
 from .models import Plant, TempReading, TempFile, HarvestEntry
 import logging
 from datetime import date
+import json
 
 from . import engine
+
+dirname = os.path.dirname(__file__)
+attributes_path = os.path.join(dirname, 'plant_attributes.csv')
+temps_path = os.path.join(dirname, 'allData.csv')
+harvest_path = os.path.join(dirname, 'harvest_data.csv')
+frost_path = os.path.join(dirname, 'frost_dates.json')
 
 #This file updates the TempFile table with all the new values from the TempReading table
 def update_temp_file():
@@ -50,7 +58,7 @@ def update_temp_file():
 def csv_to_sql_temp_data():
 
     from datetime import datetime, timedelta
-    csv = pd.read_csv('data/allData.csv')
+    csv = pd.read_csv(temps_path)
     csv.columns=['year', 'month', 'day', 'hour', 'offset', 'temp']
 
     Session = sessionmaker(bind=engine)
@@ -67,7 +75,7 @@ def csv_to_sql_temp_data():
 def csv_to_sql_harvest_data():
 
     from datetime import datetime
-    csv = pd.read_csv('data/harvest_data.csv')
+    csv = pd.read_csv(harvest_path)
     csv.columns=['date', 'name', 'mass']
 
     Session = sessionmaker(bind=engine)
@@ -84,7 +92,7 @@ def csv_to_sql_harvest_data():
 #This function will read the plant_attributes csv, find any differences between it and the sql database, and update the sql database
 def csv_to_sql():
 
-    csv = pd.read_csv('data/plant_attributes.csv')
+    csv = pd.read_csv(attributes_path)
     csv.columns=['name', 'active', 'start', 'season', 'min_temp', 'max_temp', 'spring_sow', 'spring_transplant', 'fall_sow', 'cal_g']
 
     with engine.begin() as connection:
@@ -106,7 +114,7 @@ def sql_to_csv():
 
     with engine.connect() as connection:
         df = pd.read_sql_table('Plant', connection)
-        df.iloc[: , 1:].to_csv('data/plant_attributes.csv', index=False)
+        df.iloc[: , 1:].to_csv(attributes_path, index=False)
 
 #This function pulls an sql database into a pandas dataframe and returns it
 def get_frame(name):
@@ -114,3 +122,15 @@ def get_frame(name):
     with engine.connect() as connection:
         df = pd.read_sql_table(name, connection)
         return df
+
+#This function returns a dataframe with the frost dates
+def get_frost_dates():
+
+    df = pd.read_json(frost_path)
+    return df
+
+#Dumps the given dict into a json
+def frost_to_json(dict):
+
+    with open(frost_path, 'w') as file:
+        json.dump(data, file)

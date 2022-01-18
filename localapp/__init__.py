@@ -2,7 +2,7 @@ from data import engine, init_engine
 
 from . import mqtt
 
-def localapp_thread(run_localapp):
+def localapp_thread():
     def wrapper():
         while True:
             try:

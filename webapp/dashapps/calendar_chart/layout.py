@@ -1,19 +1,22 @@
 from dash import dcc, html, dash_table
 import pandas as pd
+from data.interface import get_frost_dates
 from webapp.templates.app.colors import palette, tab_style, tabs_style, tab_selected_style
 from datetime import datetime, date, timedelta
+from .calendar import generate_calendar
 
 #Have to predefine the table border as it doesn't allow string formatting
 border_color = palette['border']
 
-#Set the start date and end date for generating the calendar
+#Import both the dataframes for planting and temps tables
 from .calendar import generate_calendar
 current_date = date.today()
 start_date = current_date - timedelta(days=14)
 end_date = current_date + timedelta(days=180)
+df_planting, df_temps = generate_calendar(start_date, end_date)
 
 #Get the values for important days that will be in the columns of the table
-frost_dates = pd.read_json('data/frost_dates.json')
+frost_dates = get_frost_dates()
 last_frost_date = datetime.strptime(frost_dates['last_frost'][0], '%m/%d')
 first_frost_date = datetime.strptime(frost_dates['first_frost'][0], '%m/%d')
 
@@ -21,11 +24,25 @@ last_frost_column = last_frost_date.strftime("%b %d")
 first_frost_column = first_frost_date.strftime("%b %d")
 current_column = current_date.strftime("%b %d")
 
-#Import both the dataframes for planting and temps tables
-df_planting, df_temps = generate_calendar(start_date, end_date)
-
 #Layout is defined in a serve_layout function rather than on its own to ensure the data updates on page refresh. See the Live Updates section on the Dash documentation
 def serve_layout():
+
+    #Set the start date and end date for generating the calendar
+    current_date = date.today()
+    start_date = current_date - timedelta(days=14)
+    end_date = current_date + timedelta(days=180)
+
+    #Get the values for important days that will be in the columns of the table
+    frost_dates = get_frost_dates()
+    last_frost_date = datetime.strptime(frost_dates['last_frost'][0], '%m/%d')
+    first_frost_date = datetime.strptime(frost_dates['first_frost'][0], '%m/%d')
+
+    last_frost_column = last_frost_date.strftime("%b %d")
+    first_frost_column = first_frost_date.strftime("%b %d")
+    current_column = current_date.strftime("%b %d")
+
+    #Import both the dataframes for planting and temps tables
+    df_planting, df_temps = generate_calendar(start_date, end_date)
 
     layout = html.Div([
 

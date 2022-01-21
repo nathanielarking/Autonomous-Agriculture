@@ -26,8 +26,9 @@ def register_callbacks(dashapp):
         #Restrict the dataset to the range of the date picker
         df = df[df['date'].between(start_date, end_date)]
 
+
         #Return the updated graph
-        fig = px.line(df, x="date", y=df.columns[1:-1])
+        fig = px.scatter(df, x="date", y=df.columns[1:-1])
 
         #Update y axis lines and add min and max temps for plant selection
         Session = sessionmaker(bind=engine)

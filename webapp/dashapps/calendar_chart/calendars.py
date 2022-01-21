@@ -6,10 +6,92 @@ from data.interface import get_frost_dates
 from data.models import Plant, TempFile
 from datetime import date, datetime, timedelta
 
-def generate_calendar(start_date, end_date):
+def transform(df):
+    df = df.reset_index()
+    df['Date'] = df['Date'].dt.strftime("%b %d")
+
+    #Transpose frames and fix columns and headers
+    df = df.T
+    df.columns = df.iloc[0]
+    df = df[1:]
+
+    #Fix index name
+    df.index.name = 'Name'
+    df = df.reset_index()
+
+    return df
+
+def generate_planting_calendar(start_days, end_days):
 
     #Get frost dates
     frost_dates = get_frost_dates()
+
+    current_date = date.today()
+    start_date = current_date - timedelta(days=start_days)
+    end_date = current_date + timedelta(days=end_days)
+
+    with Session(engine) as session:
+
+        #Grab list of plants and names of plants in a list
+        plants = session.query(Plant).filter_by(active=True).all()
+        names = []
+        for plant in plants:
+            names.append(plant.name)
+
+        #Get range of dates
+        date_range = pd.date_range(start_date, end_date)
+        #Grabbing tempfiles in our date range
+        temp_files = session.query(TempFile).filter(and_(TempFile.date>=start_date, TempFile.date<=end_date))
+
+        #Begin construction of planting dataframe with columns and index
+        df_planting = pd.DataFrame(columns=names, index=date_range)
+        df_planting.index.name = 'Date'
+
+        #Setting data by looping over every plant and index in data
+        for plant in plants:
+            
+            #Assign sow and transplant values to the planting dataframe
+            for date_idx in date_range:
+
+                #Get the frost dates for this year
+                first_frost = datetime.strptime(frost_dates['first_frost'][0], '%m/%d').replace(year=date_idx.year)
+                last_frost = datetime.strptime(frost_dates['last_frost'][0], '%m/%d').replace(year=date_idx.year)
+
+                #Find planting dates
+                spring_sow_date = first_frost + timedelta(days=plant.spring_sow)
+                spring_transplant_date = first_frost + timedelta(days=plant.spring_transplant)
+                fall_sow_date = last_frost + timedelta(days=plant.fall_sow)
+
+
+                #Assign values
+                if plant.season == 'warm':
+                    if plant.start == 'indoors':
+                        if date_idx == spring_sow_date: df_planting[plant.name][date_idx] = 'Sow'
+                        if date_idx == spring_transplant_date: df_planting[plant.name][date_idx] = 'Transplant'
+
+                    elif plant.start == 'direct':
+                        if date_idx == spring_sow_date: df_planting[plant.name][date_idx] = 'Sow'
+
+                elif plant.season == 'cool':
+                    if plant.start == 'indoors':
+                        if date_idx == spring_sow_date: df_planting[plant.name][date_idx] = 'Sow'
+                        if date_idx == spring_transplant_date: df_planting[plant.name][date_idx] = 'Transplant'
+
+                    elif plant.start == 'direct':
+                        if date_idx == spring_sow_date: df_planting[plant.name][date_idx] = 'Sow'
+
+                    if date_idx == fall_sow_date: df_planting[plant.name][date_idx] = 'Sow'
+
+        return transform(df_planting)
+
+def generate_temps_calendar(start_days, end_days):
+
+    #Get frost dates
+    frost_dates = get_frost_dates()
+
+    current_date = date.today()
+    start_date = current_date - timedelta(days=start_days)
+    end_date = current_date + timedelta(days=end_days)
 
     with Session(engine) as session:
 
@@ -47,26 +129,6 @@ def generate_calendar(start_date, end_date):
                 spring_transplant_date = first_frost + timedelta(days=plant.spring_transplant)
                 fall_sow_date = last_frost + timedelta(days=plant.fall_sow)
 
-
-                #Assign values
-                if plant.season == 'warm':
-                    if plant.start == 'indoors':
-                        if date_idx == spring_sow_date: df_planting[plant.name][date_idx] = 'Sow'
-                        if date_idx == spring_transplant_date: df_planting[plant.name][date_idx] = 'Transplant'
-
-                    elif plant.start == 'direct':
-                        if date_idx == spring_sow_date: df_planting[plant.name][date_idx] = 'Sow'
-
-                elif plant.season == 'cool':
-                    if plant.start == 'indoors':
-                        if date_idx == spring_sow_date: df_planting[plant.name][date_idx] = 'Sow'
-                        if date_idx == spring_transplant_date: df_planting[plant.name][date_idx] = 'Transplant'
-
-                    elif plant.start == 'direct':
-                        if date_idx == spring_sow_date: df_planting[plant.name][date_idx] = 'Sow'
-
-                    if date_idx == fall_sow_date: df_planting[plant.name][date_idx] = 'Sow'
-
             #Assign values to temps table
             for file in temp_files:
 
@@ -75,25 +137,17 @@ def generate_calendar(start_date, end_date):
                 else:
                     df_temps[plant.name][file.date] = round(max([plant.min_temp - file.min, file.max - plant.max_temp]), 2)
 
-        #Function to transpose and clean up dataframe
-        def transform(df):
-            df = df.reset_index()
-            df['Date'] = df['Date'].dt.strftime("%b %d")
+        return transform(df_temps)
 
-            #Transpose frames and fix columns and headers
-            df = df.T
-            df.columns = df.iloc[0]
-            df = df[1:]
+def get_date_columns():
+    #Get the values for important days that will be in the columns of the table
+    frost_dates = get_frost_dates()
+    last_frost_date = datetime.strptime(frost_dates['last_frost'][0], '%m/%d')
+    first_frost_date = datetime.strptime(frost_dates['first_frost'][0], '%m/%d')
+    current_date = date.today()
 
-            #Fix index name
-            df.index.name = 'Name'
-            df = df.reset_index()
+    last_frost_column = last_frost_date.strftime("%b %d")
+    first_frost_column = first_frost_date.strftime("%b %d")
+    current_column = current_date.strftime("%b %d")
 
-            return df
-
-        #Apply transform to our tables
-        df_list = [df_planting, df_temps]
-        df_list = [df.pipe(transform) for df in df_list]
-
-        return df_list
-
+    return last_frost_column, first_frost_column, current_column

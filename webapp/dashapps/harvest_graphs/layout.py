@@ -32,45 +32,53 @@ def serve_layout():
 ])
     return layout
 
-total_layout = html.Div([
+def serve_total_layout():
 
-    dcc.RadioItems(
-        id='total_mode-picker',
-        options=[
-            {'label': 'Display Mass', 'value': 'mass'},
-            {'label': 'Display Calories', 'value': 'cals'}
-        ],
-        value='mass'
-    ),
+    total_layout = html.Div([
 
-    dcc.Graph(id='total_bar_date', figure=px.bar()),
-    dcc.Graph(id='total_bar_plant', figure=px.bar()),
-    dcc.Graph(id='total_pie', figure=px.bar())
+        dcc.RadioItems(
+            id='total_mode-picker',
+            options=[
+                {'label': 'Display Mass', 'value': 'mass'},
+                {'label': 'Display Calories', 'value': 'cals'}
+            ],
+            value='mass'
+        ),
 
-])
+        dcc.Graph(id='total_bar_date', figure=px.bar()),
+        dcc.Graph(id='total_bar_plant', figure=px.bar()),
+        dcc.Graph(id='total_pie', figure=px.bar())
 
-annual_layout = html.Div([
-    
-    dcc.Dropdown(
-                id='year-picker',
-                options=options,
-                value=options[-1]['value'],
-                multi=False,
-                placeholder='Select Year',
-                style=dropdown_style
-            ),
+    ])
 
-    dcc.RadioItems(
-        id='annual_mode-picker',
-        options=[
-            {'label': 'Display Mass', 'value': 'mass'},
-            {'label': 'Display Calories', 'value': 'cals'}
-        ],
-        value='mass'
-    ),
+    return total_layout
 
-    dcc.Graph(id='annual_bar_date', figure=px.bar()),
-    dcc.Graph(id='annual_bar_plant', figure=px.bar()),
-    dcc.Graph(id='annual_pie', figure=px.bar())
+def serve_annual_layout():
 
-])
+    annual_layout = html.Div([
+        
+        dcc.Dropdown(
+                    id='year-picker',
+                    options=options,
+                    value=options[-1]['value'],
+                    multi=False,
+                    placeholder='Select Year',
+                    style=dropdown_style
+                ),
+
+        dcc.RadioItems(
+            id='annual_mode-picker',
+            options=[
+                {'label': 'Display Mass', 'value': 'mass'},
+                {'label': 'Display Calories', 'value': 'cals'}
+            ],
+            value='mass'
+        ),
+
+        dcc.Graph(id='annual_bar_date', figure=px.bar()),
+        dcc.Graph(id='annual_bar_plant', figure=px.bar()),
+        dcc.Graph(id='annual_pie', figure=px.bar())
+
+    ])
+
+    return annual_layout

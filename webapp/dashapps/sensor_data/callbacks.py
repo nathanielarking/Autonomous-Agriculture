@@ -1,5 +1,5 @@
 from dash.dependencies import Input, Output
-from .layout import summary_layout, raw_layout
+from .layout import serve_summary_layout, serve_raw_layout
 
 def register_callbacks(dashapp):
 
@@ -10,8 +10,8 @@ def register_callbacks(dashapp):
     )
     def render_tables(tab):
         if tab =='summary-tab':
-            return summary_layout
+            return serve_summary_layout()
 
         elif tab == 'raw-tab':
-            return raw_layout
+            return serve_raw_layout()
 

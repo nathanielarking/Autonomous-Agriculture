@@ -1,5 +1,5 @@
 from dash.dependencies import Input, Output
-from .layout import total_layout, annual_layout
+from .layout import serve_total_layout, serve_annual_layout
 from sqlalchemy.orm import Session
 from data import engine
 from data.models import Plant, HarvestEntry
@@ -16,10 +16,10 @@ def register_callbacks(dashapp):
     )
     def render_tabs(tab):
         if tab =='total-tab':
-            return total_layout
+            return serve_total_layout()
 
         elif tab == 'annual-tab':
-            return annual_layout
+            return serve_annual_layout()
 
     #Register changes for total graphs config
     @dashapp.callback(

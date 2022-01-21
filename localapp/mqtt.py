@@ -1,14 +1,13 @@
 import paho.mqtt.client as mqtt_client
 from datetime import datetime, timedelta
 import logging
-import re
 from data import engine
 from data.models import TempReading
 from sqlalchemy.orm import Session
 
 
 #Connection info for our mqtt client
-broker = '192.168.0.195'
+broker = '127.0.0.1'
 port = 1883
 
 #Variable to store current date and whether this is the first run or not
@@ -45,7 +44,7 @@ def subscribe(client):
             reading = reading.strip('b\'')
             readings = reading.split('/')
             print(f"Received `{reading}` from `{msg.topic}` topic")
-            """
+            
             #Grab values from reading
             year = int(readings[0])
             month = int(readings[1])
@@ -55,13 +54,13 @@ def subscribe(client):
             temp = float(readings[5])
 
             #Create date from values
-            timestamp = datetime(year, month, day) + timedelta(hours=offset)
+            timestamp = datetime(year, month, day) + timedelta(hours=hour+offset)
 
             with Session(engine) as session:
                 new_reading = TempReading(group='soil', datetime=timestamp, value=temp)
                 session.add(new_reading)
                 session.commit()
-            """
+            
     client.subscribe('esp/sensor1')
     client.on_message = on_message
 

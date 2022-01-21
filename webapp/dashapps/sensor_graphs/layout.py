@@ -4,6 +4,7 @@ from webapp.templates.app.colors import palette, picker_style, dropdown_style
 from sqlalchemy.orm import sessionmaker
 from data import engine
 from data.models import Plant
+from data.interface import update_temp_file
 import plotly.express as px
 import plotly.graph_objects as go
 import plotly.io as pio
@@ -20,6 +21,9 @@ def serve_layout():
 
     #Have to predefine the table border as it doesn't allow string formatting
     border_color = palette['border']
+
+    #Update the temp file table from the temp reading table
+    update_temp_file()
 
     #Import the Plant database, drop the ID and group columns
     from data.interface import get_frame

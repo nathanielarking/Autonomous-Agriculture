@@ -17,7 +17,7 @@ float read_soil_temp(){
     float temp = soil_temp_sensor.getTempCByIndex(0);
 
     //Sometimes the sensor gives a bad value of -127, so loop call the sensor to prevent this
-    while(temp < -100){
+    while(temp < -100 && temp > 50){
       delay(500);
       temp = soil_temp_sensor.getTempCByIndex(0);
       }

@@ -6,7 +6,7 @@ import logging
 from threading import Thread
 
 #Create instance of flask webapp
-webapp = create_webapp()
+#webapp = create_webapp()
 
 #Contains code to be run when executed as a script (rather than imported as a module)
 if __name__ == '__main__':
@@ -19,4 +19,4 @@ if __name__ == '__main__':
     localapp_thread.start()
 
     #Initialize thread to run the flask web application
-    webapp.run(debug=True, port=5000, host='0.0.0.0')
+    #webapp.run(debug=True, port=5000, host='0.0.0.0')

@@ -7,3 +7,5 @@ pandas == 1.3.5
 python-dotenv == 0.19.2
 plotly == 5.4.0
 paho-mqtt == 1.6.1
+picamera
+requests

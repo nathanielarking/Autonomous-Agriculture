@@ -14,3 +14,9 @@
  3. localapp/ is the directory where I've put the part of the project that will talk to my sensors
  4. esp/ is the directory where I've put all the code for my ESP8266
 
+The installation process is as follows:
+1. Clone the repository into the desired location
+2. Create a Python virtual environment in a command terminal with python -m venv env
+3. Activate virtual environment (on linux, this is done by typing source env/bin/activate)
+4. Install requirements by running pip install -r requirements.txt
+5. Run the program by running python main.py, and/or running it in a bash script on startup or as a service

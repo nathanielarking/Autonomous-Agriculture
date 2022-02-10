@@ -1,12 +1,8 @@
-#!/usr/bin/env python
+#Same code as normal main but it only starts the localapp
 
-from webapp import create_webapp
 from localapp import localapp_thread
 import logging
 from threading import Thread
-
-#Create instance of flask webapp
-webapp = create_webapp()
 
 #Contains code to be run when executed as a script (rather than imported as a module)
 if __name__ == '__main__':
@@ -17,6 +13,3 @@ if __name__ == '__main__':
     #Initialize thread to run the mqtt local application
     localapp_thread = Thread(target=localapp_thread)
     localapp_thread.start()
-
-    #Initialize thread to run the flask web application
-    webapp.run(debug=False, port=5000, host='0.0.0.0')

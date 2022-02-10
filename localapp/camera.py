@@ -1,10 +1,12 @@
 from picamera import PiCamera
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 import json
 import requests
 
 camera = PiCamera()
+camera.resolution = (2592, 1944)
+camera.image_effect = 'denoise'
 
 #Import photos path
 dirname = os.path.dirname(__file__)
@@ -26,8 +28,8 @@ def cam_capture():
     data = json.loads(response.text)
 
     #Pull sunrise and sunset times
-    sunrise = datetime.fromtimestamp(data['sys']['sunrise'])
-    sunset = datetime.fromtimestamp(data['sys']['sunset'])
+    sunrise = datetime.fromtimestamp(data['sys']['sunrise']) + timedelta(hours=1)
+    sunset = datetime.fromtimestamp(data['sys']['sunset']) - timedelta(hours=1)
 
     #Take picture if time is within sunrise and sunset
     now = datetime.now()

@@ -1,7 +1,7 @@
 # Autonomous Agriculture
  Automated Garden Information System
 
- My name is Nathaniel King and I'm very interested in sustainability. This is a project I've been working on with the goal of automating as much of the information side of agriculture as possible.
+ My name is Nathaniel and I'm very interested in sustainability. This is a project I've been working on with the goal of automating as much of the information side of agriculture as possible.
 
  I've completed a few different stages of the project:
 

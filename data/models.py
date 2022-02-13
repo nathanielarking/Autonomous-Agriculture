@@ -32,6 +32,7 @@ class Plant(Base):
     cal_g = Column(Float)
 
     harvests = relationship("HarvestEntry", back_populates="Plant")
+    plantings = relationship("PlantingEntry", back_populates="Plant")
 
 #Class to store sensor data in a database
 class TempReading(Base):
@@ -70,3 +71,13 @@ class HarvestEntry(Base):
     Plant = relationship("Plant", back_populates="harvests")
     mass = Column(Float)
     date = Column(Date)
+
+#Class to store planting descriptions in the database
+class PlantingEntry(Base):
+
+    __tablename__ = "PlantingEntry"
+    id = Column(Integer, primary_key=True)
+    Plant_id = Column(Integer, ForeignKey('Plant.id'))
+    Plant = relationship("Plant", back_populates="plantings")
+    date = Column(Date)
+    description = Column(String)

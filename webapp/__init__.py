@@ -36,6 +36,8 @@ def create_webapp():
     flask_app.register_blueprint(sensors_blueprint, urlprefix='/sensors')
     from .pages.harvest.harvest import harvest_blueprint
     flask_app.register_blueprint(harvest_blueprint, urlprefix='/harvest')
+    from .pages.entry.entry import entry_blueprint
+    flask_app.register_blueprint(entry_blueprint, urlprefix='/entry')
     from .pages.settings.settings import settings_blueprint
     flask_app.register_blueprint(settings_blueprint, urlprefix='/settings')
 

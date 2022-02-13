@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy import and_
 import pandas as pd
 from data.interface import get_frost_dates
-from data.models import Plant, TempFile
+from data.models import Plant, TempFile, PlantingEntry
 from datetime import date, datetime, timedelta
 
 def transform(df):
@@ -106,10 +106,6 @@ def generate_temps_calendar(start_days, end_days):
         #Grabbing tempfiles in our date range
         temp_files = session.query(TempFile).filter(and_(TempFile.date>=start_date, TempFile.date<=end_date))
 
-        #Begin construction of planting dataframe with columns and index
-        df_planting = pd.DataFrame(columns=names, index=date_range)
-        df_planting.index.name = 'Date'
-
         #Begin construction of temp dataframe with columns and index
         df_temps =  pd.DataFrame(columns=names, index=date_range)
         df_temps.index.name = 'Date'
@@ -126,6 +122,39 @@ def generate_temps_calendar(start_days, end_days):
                     df_temps[plant.name][file.date] = round(max([plant.min_temp - file.min, file.max - plant.max_temp]), 2)
 
         return transform(df_temps)
+
+def generate_record_calendar(start_days, end_days):
+
+    current_date = date.today()
+    start_date = current_date - timedelta(days=start_days)
+    end_date = current_date + timedelta(days=end_days)
+
+    with Session(engine) as session:
+
+        #Grab list of plants and names of plants in a list
+        plants = session.query(Plant).filter_by(active=True).all()
+        names = []
+        for plant in plants:
+            names.append(plant.name)
+
+        #Get range of dates
+        date_range = pd.date_range(start_date, end_date)
+
+        #Begin construction of record dataframe with columns and index
+        df_record =  pd.DataFrame(columns=names, index=date_range)
+        df_record.index.name = 'Date'
+
+        #Setting data by looping over every plant and index in data
+        for plant in plants:
+
+            #Grabbing records in our date range for this plant
+            records = session.query(PlantingEntry).filter_by(Plant_id=plant.id).filter(and_(PlantingEntry.date>=start_date, PlantingEntry.date<=end_date)).all()
+
+            #Assign values to records table
+            for planting in records:
+                df_record[plant.name][planting.date] = planting.description
+
+        return transform(df_record)
 
 def get_date_columns():
     #Get the values for important days that will be in the columns of the table

@@ -1,0 +1,60 @@
+{% extends "app/base.html" %}
+
+{% block title %}Planting Entry | Autonomous Agriculture{% endblock %}
+
+
+{% block content %}
+<div class="row">
+    <div id="sidebar-container" class="sidebar-expanded d-none d-md-block sidenav">
+        <ul class="list-group sticky-top">
+            <a href="/entry/planting">Planting</a>
+            <a href="/entry/harvest">Harvest</a>
+        </ul>
+    </div>
+    <div class="col">
+        <div class="body">
+            <div class="dash">
+                <h1 class="title">
+                    Planting Entry
+                </h1>
+            
+                <div style="padding-top: 2%; padding-bottom: 2%; padding-left: 15%; padding-right: 15%">
+
+                    <form method="POST">
+                    <table>
+                        <tr>
+                            <td><label for="name">Name of Plant</label></td>
+                            <td><select id="name" name="name">
+                                {% for name in names %}
+                                    <option value="{{ name }}">{{ name }}</option>
+                                {% endfor %}
+                            </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>Date</label>
+                            <td>
+                                <input type="date" id="date" name="date" value="{{ current_day }}" required pattern="\d{4}-\d{2}-\d{2}">
+                                <span class="validity"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>Description</label>
+                            <td>
+                                <input type="text" id="description" name="description" >
+                            </td>
+                        </tr>
+                    </table>
+
+                    <button type="submit" class="btn-primary">Submit</button>
+
+                    </form>
+
+                </div>
+            
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -23,7 +23,7 @@ engine = create_engine(f'sqlite:///{database_path}', echo=False)
 def init_engine():
 
     #Create it if it does not already exist
-    from data.models import User, Plant, TempReading, TempFile, HarvestEntry
+    from data.models import User, Plant, TempReading, TempFile, HarvestEntry, PlantingEntry
     Base.metadata.create_all(bind=engine)
 
     #Session = sessionmaker(bind=engine)

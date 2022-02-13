@@ -1,6 +1,6 @@
 from dash.dependencies import Input, Output
 from dash.exceptions import PreventUpdate
-from .layout import serve_planting_layout, serve_temps_layout
+from .layout import serve_planting_layout, serve_temps_layout, serve_record_layout
 
 def register_callbacks(dashapp):
 
@@ -21,3 +21,6 @@ def register_callbacks(dashapp):
 
         elif tab == 'temps-tab':
             return serve_temps_layout(start_days, end_days)
+
+        elif tab == 'record-tab':
+            return serve_record_layout(start_days, end_days)

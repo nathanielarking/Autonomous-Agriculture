@@ -82,6 +82,12 @@ def csv_to_sql_harvest_data():
 
     with Session() as session:
         for row in csv.iterrows():
+
+            print(row[1][0])
+            print(row[1][1])
+            print(row[1][2])
+
+
             date = datetime.strptime(row[1][0], '%Y-%m-%d')
             plant = session.query(Plant).filter_by(name=row[1][1]).first()
             

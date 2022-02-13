@@ -4,7 +4,7 @@ import logging
 from data import engine
 from data.models import TempReading
 from sqlalchemy.orm import Session
-from .camera import cam_capture
+#from .camera import cam_capture
 
 
 #Connection info for our mqtt client
@@ -81,7 +81,7 @@ def publish_date(client):
         client.publish("date/current", return_datetime, retain=True)
 
         #Also, take a picture
-        cam_capture()
+        #cam_capture()
 
 def update(client):
 

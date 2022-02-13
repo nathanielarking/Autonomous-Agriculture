@@ -7,9 +7,9 @@ def register_callbacks(dashapp):
     #Register change between tabs
     @dashapp.callback(
         Output('block-content', 'children'),
-        Input('calendar-tabs', 'value'),
+        [Input('calendar-tabs', 'value'),
         Input('start-input', 'value'),
-        Input('end-input', 'value'),
+        Input('end-input', 'value')]
     )
     def render_tables(tab, start_days, end_days):
 

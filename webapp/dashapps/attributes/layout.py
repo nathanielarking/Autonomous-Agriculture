@@ -68,6 +68,10 @@ def serve_layout():
                 'border':  f'3px solid {border_color}'
             }
             ),
+
+            html.Button('Add Row', id='add-val', n_clicks=0),
+            html.Button('Submit Changes', id='submit-val', n_clicks=0),
+
         ])
 
     return layout

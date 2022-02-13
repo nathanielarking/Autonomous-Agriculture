@@ -130,7 +130,7 @@ def get_frost_dates():
     return df
 
 #Dumps the given dict into a json
-def frost_to_json(dict):
+def frost_to_json(data):
 
     with open(frost_path, 'w') as file:
         json.dump(data, file)

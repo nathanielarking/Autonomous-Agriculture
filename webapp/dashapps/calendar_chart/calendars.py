@@ -54,13 +54,13 @@ def generate_planting_calendar(start_days, end_days):
             for date_idx in date_range:
 
                 #Get the frost dates for this year
-                first_frost = datetime.strptime(frost_dates['first_frost'][0], '%m/%d').replace(year=date_idx.year)
                 last_frost = datetime.strptime(frost_dates['last_frost'][0], '%m/%d').replace(year=date_idx.year)
+                first_frost = datetime.strptime(frost_dates['first_frost'][0], '%m/%d').replace(year=date_idx.year)
 
                 #Find planting dates
-                spring_sow_date = first_frost + timedelta(days=plant.spring_sow)
-                spring_transplant_date = first_frost + timedelta(days=plant.spring_transplant)
-                fall_sow_date = last_frost + timedelta(days=plant.fall_sow)
+                spring_sow_date = last_frost + timedelta(days=plant.spring_sow)
+                spring_transplant_date = last_frost + timedelta(days=plant.spring_transplant)
+                fall_sow_date = first_frost + timedelta(days=plant.fall_sow)
 
 
                 #Assign values
@@ -116,18 +116,6 @@ def generate_temps_calendar(start_days, end_days):
 
         #Setting data by looping over every plant and index in data
         for plant in plants:
-            
-            #Assign sow and transplant values to the planting dataframe
-            for date_idx in date_range:
-
-                #Get the frost dates for this year
-                first_frost = datetime.strptime(frost_dates['first_frost'][0], '%m/%d').replace(year=date_idx.year)
-                last_frost = datetime.strptime(frost_dates['last_frost'][0], '%m/%d').replace(year=date_idx.year)
-
-                #Find planting dates
-                spring_sow_date = first_frost + timedelta(days=plant.spring_sow)
-                spring_transplant_date = first_frost + timedelta(days=plant.spring_transplant)
-                fall_sow_date = last_frost + timedelta(days=plant.fall_sow)
 
             #Assign values to temps table
             for file in temp_files:

@@ -52,6 +52,9 @@ def serve_layout():
                 'border':  f'3px solid {border_color}'
             }
             ),
+
+            html.Button('Submit Changes', id='submit-val', n_clicks=0),
+            
         ])
 
     return layout

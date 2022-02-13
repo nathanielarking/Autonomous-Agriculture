@@ -19,8 +19,8 @@ def serve_layout():
         ]),
         html.Div(id='block-content'),
 
-    dcc.Input(id="start-input", type="number", placeholder="Past days", value=14, debounce=False, min=4, max=54, step=1, style={'marginRight':'10px'}),
-    dcc.Input(id="end-input", type="number", placeholder="Future days", value=14, debounce=False, min=4, max=54, step=1),
+    dcc.Input(id="start-input", type="number", placeholder="Past days", value=14, debounce=False, min=4, max=365, step=1, style={'marginRight':'10px'}),
+    dcc.Input(id="end-input", type="number", placeholder="Future days", value=14, debounce=False, min=4, max=365, step=1),
 
     ])
     return layout

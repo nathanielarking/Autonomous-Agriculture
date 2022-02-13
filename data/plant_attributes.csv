@@ -11,7 +11,7 @@ Cabbage,1,indoors,cool,8,30,-56,-21,-135,0.24
 Lettuce,1,indoors,cool,8,22,-42,-21,-56,0.14
 Cauliflower,1,indoors,cool,13,30,-35,-14,-42,0.25
 Carrot,1,direct,cool,10,28,-21,0,-70,0.41
-Onion,1,indoors,cool,9,20,-70,-28,-42,0.42
+Onion,1,indoors,cool,9,20,-63,21,-42,0.42
 Sweet potato,1,indoors,warm,18,35,-28,28,0,0.86
 Garlic,0,direct,cool,0,35,-28,0,-7,1.49
 Potato,1,direct,warm,9,35,-28,0,0,1.04

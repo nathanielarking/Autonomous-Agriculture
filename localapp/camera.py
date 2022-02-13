@@ -4,10 +4,6 @@ import os
 import json
 import requests
 
-camera = PiCamera()
-camera.resolution = (2592, 1944)
-camera.image_effect = 'denoise'
-
 #Import photos path
 dirname = os.path.dirname(__file__)
 photos = os.path.join(dirname, 'photos')
@@ -23,6 +19,11 @@ url = f'https://api.openweathermap.org/data/2.5/weather?lat={LAT_COORDINATE}&lon
 #Takes a picture if the time is within sunrise and sunset
 def cam_capture():
 
+    #Create instance of camera object
+    camera = PiCamera()
+    camera.resolution = (2592, 1944)
+    camera.image_effect = 'denoise'
+
     #Call API
     response = requests.get(url)
     data = json.loads(response.text)
@@ -37,4 +38,7 @@ def cam_capture():
         now = now.strftime('%Y-%m-%d-%H.png')
         file_path = os.path.join(photos, now)
         camera.capture(file_path)
+
+    #close camera
+    camera.close()
 

@@ -13,7 +13,7 @@ def run_localapp():
 
     init_engine()
 
-    from data.interface import csv_to_sql_harvest_data, csv_to_sql_temp_data, update_temp_file, csv_to_sql_harvest_data
+    #from data.interface import csv_to_sql, csv_to_sql_harvest_data, csv_to_sql_temp_data, update_temp_file, csv_to_sql_harvest_data
     #Add plant attributes into database
     #csv_to_sql()
     #Add sensor data into database and update file table

@@ -19,4 +19,4 @@ if __name__ == '__main__':
     localapp_thread.start()
 
     #Initialize thread to run the flask web application
-    webapp.run(debug=True, port=5000, host='0.0.0.0')
+    webapp.run(debug=False, port=5000, host='0.0.0.0')

@@ -8,6 +8,7 @@ from data.interface import update_temp_file
 import plotly.express as px
 import plotly.graph_objects as go
 import plotly.io as pio
+from datetime import datetime
 
 #Define our custom template for this plotly graph
 pio.templates['custom_template'] = go.layout.Template(
@@ -32,7 +33,8 @@ def serve_layout():
     df = df.drop('group', axis=1)
 
     #Grab the minimum and maximum dates found in the dataset for constricting the range picker
-    min_date = df['date'].min()
+    #min_date = df['date'].min()
+    min_date = datetime(datetime.today().year, 1, 1)
     max_date = df['date'].max()
 
     fig = px.line(df, x="date", y=df.columns[1:-1])

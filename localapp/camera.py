@@ -6,7 +6,8 @@ import requests
 
 #Import photos path
 dirname = os.path.dirname(__file__)
-photos = os.path.join(dirname, 'photos')
+photos_path = os.path.dirname(dirname)
+photos_path = os.path.join(photos_path, 'webapp', 'static', 'photos')
 
 #Import environment variables
 from dotenv import load_dotenv, find_dotenv
@@ -19,11 +20,6 @@ url = f'https://api.openweathermap.org/data/2.5/weather?lat={LAT_COORDINATE}&lon
 #Takes a picture if the time is within sunrise and sunset
 def cam_capture():
 
-    #Create instance of camera object
-    camera = PiCamera()
-    camera.resolution = (2592, 1944)
-    camera.image_effect = 'denoise'
-
     #Call API
     response = requests.get(url)
     data = json.loads(response.text)
@@ -35,10 +31,16 @@ def cam_capture():
     #Take picture if time is within sunrise and sunset
     now = datetime.now()
     if now > sunrise and now < sunset:
+
+        #Initalize camera
+        camera = PiCamera()
+        camera.resolution = (2592, 1944)
+        camera.image_effect = 'denoise'
+
         now = now.strftime('%Y-%m-%d-%H.png')
-        file_path = os.path.join(photos, now)
+        file_path = os.path.join(photos_path, now)
         camera.capture(file_path)
 
-    #close camera
-    camera.close()
+        #close camera
+        camera.close()
 

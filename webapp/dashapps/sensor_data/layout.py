@@ -7,9 +7,7 @@ from datetime import datetime
 #Have to predefine the table border as it doesn't allow string formatting
 border_color = palette['border']
 
-from .frames import get_frames
-#Import the tempfile database
-df_summary, df_raw = get_frames()
+from .frames import get_summary_frame, get_raw_frame
 
 #Layout is defined in a serve_layout function rather than on its own to ensure the data updates on page refresh. See the Live Updates section on the Dash documentation
 def serve_layout():
@@ -30,7 +28,7 @@ def serve_layout():
 def serve_summary_layout():
 
     #Import the tempfile database
-    df_summary, df_raw = get_frames()
+    df_summary = get_summary_frame()
 
     summary_layout = html.Div([
 
@@ -92,7 +90,7 @@ def serve_summary_layout():
 def serve_raw_layout():
     
     #Import the tempfile database
-    df_summary, df_raw = get_frames()
+    df_raw = get_raw_frame()
 
     raw_layout = html.Div([
 

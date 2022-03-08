@@ -6,6 +6,7 @@ from data import engine
 from sqlalchemy.orm import sessionmaker
 from data.models import Plant
 from data.interface import get_frame
+from datetime import timedelta
 
 def register_callbacks(dashapp):
     
@@ -25,6 +26,14 @@ def register_callbacks(dashapp):
 
         #Restrict the dataset to the range of the date picker
         df = df[df['date'].between(start_date, end_date)]
+        df = df.reset_index()
+
+        #Disconnect datapoints that have gaps more than 7 days, so that lines aren't drawn between them on the graph
+        for idx, row in df.iterrows():
+            if idx < len(df.index) - 1:
+                delta = df.iloc[idx + 1]['date'] - df.iloc[idx]['date']
+                if delta > timedelta(days=5):
+                    df.loc[idx, 'date'] = None
 
         #Return the updated graph
         fig = px.line(df, x="date", y=df.columns[1:-1])
@@ -33,8 +42,8 @@ def register_callbacks(dashapp):
         Session = sessionmaker(bind=engine)
         with Session() as session:
 
-            ticktext=list((range(0, 45, 5)))
-            tickvals=list((range(0, 45, 5)))
+            ticktext=list((range(0, 45, 2)))
+            tickvals=list((range(0, 45, 2)))
 
             if plant_selection:
                 plant = session.query(Plant).filter_by(name=plant_selection).first()

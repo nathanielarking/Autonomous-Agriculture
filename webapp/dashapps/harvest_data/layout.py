@@ -36,6 +36,7 @@ def serve_layout():
     #df['Calories'] = df['Calories'].map('{:,.2f}'.format)
     df = df[['Plant', 'date', 'mass', 'Calories']]
     df = df.rename(columns={'date': 'Date', 'mass': 'Mass (g)'})
+    df = df[::-1]
 
     layout = html.Div([
 

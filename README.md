@@ -18,7 +18,7 @@
 
 The installation process is as follows:
 1. Clone the repository into the desired location
-2. Create a Python virtual environment in a command terminal with python -m venv env
+2. Create a Python virtual environment in a command terminal with `python -m venv env`
 3. Activate virtual environment (on linux, this is done by typing `source env/bin/activate`)
 4. Install requirements by running `pip install -r requirements.txt`
 5. Install a mosquitto MQTT broker on the network, or use an online broker, making sure to reconfigure the code in localapp/ to your details

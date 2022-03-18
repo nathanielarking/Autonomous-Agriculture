@@ -22,13 +22,13 @@ engine = create_engine(f'sqlite:///{database_path}', echo=False)
 
 def init_engine():
 
-    #Create it if it does not already exist
+    #Create it if it does not already exist. This line must be updated whenever new models are added
     from data.models import User, Plant, TempReading, TempFile, HarvestEntry, PlantingEntry
     Base.metadata.create_all(bind=engine)
 
+    #Uncomment this code to clear models from the database
     #Session = sessionmaker(bind=engine)
     #session = Session()
-
     #session.query(model).delete()
 
     

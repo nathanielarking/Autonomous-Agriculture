@@ -6,6 +6,7 @@ from data.interface import get_frost_dates
 from data.models import Plant, TempFile, PlantingEntry
 from datetime import date, datetime, timedelta
 
+#Clean up and transpose calendar dataframes
 def transform(df):
     df = df.reset_index()
     df['Date'] = df['Date'].dt.strftime("%b %d")
@@ -26,6 +27,7 @@ def generate_planting_calendar(start_days, end_days):
     #Get frost dates
     frost_dates = get_frost_dates()
 
+    #Get start and end days for the calendar
     current_date = date.today()
     start_date = current_date - timedelta(days=start_days)
     end_date = current_date + timedelta(days=end_days)
@@ -65,6 +67,7 @@ def generate_planting_calendar(start_days, end_days):
 
                 #Assign values
                 if plant.season == 'warm':
+
                     if plant.start == 'indoors':
                         if date_idx == spring_sow_date: df_planting[plant.name][date_idx] = 'Sow'
                         if date_idx == spring_transplant_date: df_planting[plant.name][date_idx] = 'Transplant'
@@ -73,6 +76,7 @@ def generate_planting_calendar(start_days, end_days):
                         if date_idx == spring_sow_date: df_planting[plant.name][date_idx] = 'Sow'
 
                 elif plant.season == 'cool':
+
                     if plant.start == 'indoors':
                         if date_idx == spring_sow_date: df_planting[plant.name][date_idx] = 'Sow'
                         if date_idx == spring_transplant_date: df_planting[plant.name][date_idx] = 'Transplant'
@@ -89,6 +93,7 @@ def generate_temps_calendar(start_days, end_days):
     #Get frost dates
     frost_dates = get_frost_dates()
 
+    #Get start and end days for the calendar
     current_date = date.today()
     start_date = current_date - timedelta(days=start_days)
     end_date = current_date + timedelta(days=end_days)
@@ -125,6 +130,7 @@ def generate_temps_calendar(start_days, end_days):
 
 def generate_record_calendar(start_days, end_days):
 
+    #Get start and end days for the calendar
     current_date = date.today()
     start_date = current_date - timedelta(days=start_days)
     end_date = current_date + timedelta(days=end_days)
@@ -157,6 +163,7 @@ def generate_record_calendar(start_days, end_days):
         return transform(df_record)
 
 def get_date_columns():
+    
     #Get the values for important days that will be in the columns of the table
     frost_dates = get_frost_dates()
     last_frost_date = datetime.strptime(frost_dates['last_frost'][0], '%m/%d')

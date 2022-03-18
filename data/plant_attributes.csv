@@ -16,9 +16,9 @@ Sweet potato,1,indoors,warm,18,35,-28,28,0,0.86
 Garlic,0,direct,cool,0,35,-28,0,-7,1.49
 Potato,1,direct,warm,9,35,-28,0,0,1.04
 Basil,1,indoors,warm,18,35,-21,21,0,0.27
-Thyme,0,indoors,warm,15,35,-63,21,0,1.01
-Sage,0,indoors,warm,16,35,-42,7,0,1.01
+Thyme,1,indoors,warm,15,35,-63,21,0,1.01
+Sage,1,indoors,warm,16,35,-42,7,0,1.01
 Cilantro,1,direct,cool,12,28,7,0,-14,0.23
-Parsley,0,indoors,warm,8,35,-56,-21,0,0.23
-Dill,0,direct,warm,15,35,14,0,0,0.23
+Parsley,1,indoors,warm,8,35,-56,-21,0,0.23
+Dill,1,direct,warm,15,35,14,0,0,0.23
 Wildflowers,0,direct,warm,16,35,14,0,0,0.0

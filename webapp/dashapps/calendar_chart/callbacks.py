@@ -13,6 +13,7 @@ def register_callbacks(dashapp):
     )
     def render_tables(tab, start_days, end_days):
 
+        #Prevent the tabs from updating if either of the elements returns null
         if start_days is None or end_days is None:
             raise PreventUpdate
 

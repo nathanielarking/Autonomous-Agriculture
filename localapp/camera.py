@@ -9,7 +9,7 @@ dirname = os.path.dirname(__file__)
 photos_path = os.path.dirname(dirname)
 photos_path = os.path.join(photos_path, 'webapp', 'static', 'photos')
 
-#Import environment variables
+#Import environment variables for the API call
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 API_KEY = str(os.getenv('OPENWEATHERMAP_KEY'))

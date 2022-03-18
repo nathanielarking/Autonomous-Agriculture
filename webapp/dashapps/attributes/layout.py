@@ -9,8 +9,7 @@ def serve_layout():
     border_color = palette['border']
 
     #Import the Plant database, drop the ID column
-    from data.interface import get_frame, csv_to_sql
-    csv_to_sql()
+    from data.interface import get_frame
     df = get_frame('Plant')
     df = df.drop('id', axis=1)
     

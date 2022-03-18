@@ -3,6 +3,8 @@ from sqlalchemy import Column, Integer, String, Boolean, Float, DateTime, Date, 
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin
 
+#Note: when adding new models, update the initialization of the tables in init.py
+
 #Class to store userdata for webapp
 class User(Base, UserMixin):
 

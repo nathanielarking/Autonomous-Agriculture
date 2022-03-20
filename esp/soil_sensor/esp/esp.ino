@@ -9,7 +9,7 @@
 #define ONE_MINUTE 60000000 //One minute in microseconds
 
 //Toggling this disables all serial debugging. Must be changed in every header (.h) file
-#define DEBUG true  //set to true for debug output, false for no debug output
+#define DEBUG false  //set to true for debug output, false for no debug output
 #define DEBUG_SERIAL if(DEBUG)Serial
 
 void setup() {

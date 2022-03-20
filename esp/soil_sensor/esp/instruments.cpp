@@ -31,20 +31,22 @@ float read_soil_temp(){
 
 //Returns the integer value for soil moisture (200-2000)
 unsigned int read_soil_moisture(){
-
-  //If soil moisture sensor can be initialized, return the value of soil capicitance
-  if (!soil_moisture_sensor.begin(0x36)) {
-
-    DEBUG_SERIAL.println("Error! Soil moisture sensor not found");
-    return NULL;
+  
+  int count = 0;
+  while(!soil_moisture_sensor.begin(0x36)){
     
-    }else{
+    DEBUG_SERIAL.println("Error! Soil moisture sensor not found");
 
-      unsigned int moisture = soil_moisture_sensor.touchRead(0);
-      DEBUG_SERIAL.print("Moisture reading: ");
-      DEBUG_SERIAL.println(moisture);
-      return moisture;
-      
-      }
+    //Timeout if sensor can't connect after 3 tries
+    if(count++ >= 3) return NULL;
+    delay(100);
+    
+    }
+
+  //Once sensor has connected, read and return value
+  unsigned int moisture = soil_moisture_sensor.touchRead(0);
+  DEBUG_SERIAL.print("Moisture reading: ");
+  DEBUG_SERIAL.println(moisture);
+  return moisture;
   
   }

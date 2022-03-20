@@ -64,6 +64,15 @@ class TempFile(Base):
     avg = Column(Float)
     rate = Column(Float)
 
+#Class to store sensor data in a database
+class MoistReading(Base):
+
+    __tablename__ = "MoistReading"
+
+    id = Column(Integer, primary_key=True)
+    datetime = Column(DateTime, nullable=False)
+    value = Column(Integer, nullable=False)
+
 #Class to store harvest data in a database
 class HarvestEntry(Base):
 

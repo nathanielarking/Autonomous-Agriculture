@@ -2,7 +2,7 @@ import paho.mqtt.client as mqtt_client
 from datetime import datetime, timedelta
 import logging
 from data import engine
-from data.models import TempReading
+from data.models import TempReading, MoistReading
 from sqlalchemy.orm import Session
 from .camera import cam_capture
 
@@ -39,7 +39,7 @@ def connect():
 def subscribe(client):
     def on_message(client, userdata, msg):
 
-        if msg.topic == 'esp/sensor1':
+        if msg.topic == 'esp/soil_sensor':
             #Get reading and strip unnecceary characters
             reading = str(msg.payload)
             reading = reading.strip('b\'')
@@ -53,16 +53,23 @@ def subscribe(client):
             hour = int(readings[3])
             offset = int(readings[4])
             temp = float(readings[5])
+            moisture = int(readings[6])
 
             #Create date from values
             timestamp = datetime(year, month, day) + timedelta(hours=hour+offset)
 
             with Session(engine) as session:
-                new_reading = TempReading(group='soil', datetime=timestamp, value=temp)
-                session.add(new_reading)
+                new_temp_reading = TempReading(group='soil', datetime=timestamp, value=temp)
+                session.add(new_temp_reading)
+
+                #Only add new moisture reading if the sensor has returned a valid value
+                if moisture >= 200:
+                    new_moisture_reading = MoistReading(datetime=timestamp, value=moisture)
+                    session.add(new_moisture_reading)
+
                 session.commit()
             
-    client.subscribe('esp/sensor1')
+    client.subscribe('esp/soil_sensor')
     client.on_message = on_message
 
 def publish_date(client):

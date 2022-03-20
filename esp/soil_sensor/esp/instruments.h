@@ -7,4 +7,7 @@
 //Returns the floating point soil temperature value
 float read_soil_temp();
 
+//Returns the integer value for soil moisture (200-2000)
+unsigned int read_soil_moisture();
+
 #endif

@@ -149,6 +149,6 @@ void publish_reading(char reading[]){
   DEBUG_SERIAL.print(" which has been validated: ");
   DEBUG_SERIAL.println(valid);
 
-  if(valid) mqtt_client.publish("esp/sensor1", reading);
+  if(valid) mqtt_client.publish("esp/soil_sensor", reading);
   
   }

@@ -139,7 +139,7 @@ boolean validate_reading(char reading[]){
     if(reading[i] < '-' || reading[i++] > '9') return false;
     } 
       
-  if(count == 5) return true;
+  if(count == 6) return true;
   return false;
   
   }

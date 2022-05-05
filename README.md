@@ -6,7 +6,7 @@
  I've completed a few different stages of the project:
 
  1. Integrate soil temperature sensor into excel sheet containing calendar of plant specific temperature data (Completed: https://www.youtube.com/watch?v=w0TwPI7bLp8)
- 2. Convert software into a python webapp, run on raspberry pi (in progress)
+ 2. Convert software into a python webapp, run on raspberry pi (Completed: https://www.youtube.com/watch?v=jGFHhRVdxRM&ab_channel=TotalVeganicFuturism)
  3. Install an automatic irrigation system with a feedback control system to dispense a precise amount of liquid, utilizing both the house water supply and a rain barrel (in progress)
  4. Create an intelligent water scheduling system, which calculates the best amount + timing to dispense water, taking into account the past and projected water intake due to rain, the moisture of the soil, and the water dispensed using the irrigation system.
 

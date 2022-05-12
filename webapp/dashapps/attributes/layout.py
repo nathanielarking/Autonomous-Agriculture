@@ -9,7 +9,8 @@ def serve_layout():
     border_color = palette['border']
 
     #Import the Plant database, drop the ID column
-    from data.interface import get_frame
+    from data.interface import get_frame, csv_to_sql
+    #csv_to_sql()
     df = get_frame('Plant')
     df = df.drop('id', axis=1)
     
@@ -18,8 +19,17 @@ def serve_layout():
         dash_table.DataTable(
             id='attributes-table',
             columns=[
-                {"name": i, "id": i, "deletable": False, "selectable": False, "hideable": False}
-                for i in df.columns
+                {"name": "Name", "id": "name", "deletable": False, "selectable": False, "hideable": False, "type": "text"},
+                {"name": "Active", "id": "active", "deletable": False, "selectable": False, "hideable": False, "type": "numeric"},
+                {"name": "Indoors/Outdoors Start", "id": "start", "deletable": False, "selectable": False, "hideable": False, "type": "text"},
+                {"name": "Warm/Cool Season", "id": "season", "deletable": False, "selectable": False, "hideable": False, "type": "numeric"},
+                {"name": "Minimum Temperature (C)", "id": "min_temp", "deletable": False, "selectable": False, "hideable": False, "type": "numeric"},
+                {"name": "Maximum Temperature", "id": "max_temp", "deletable": False, "selectable": False, "hideable": False, "type": "numeric"},
+                {"name": "Spring Sow Offset", "id": "spring_sow", "deletable": False, "selectable": False, "hideable": False, "type": "numeric"},
+                {"name": "Spring Transplant Offset", "id": "spring_transplant", "deletable": False, "selectable": False, "hideable": False, "type": "numeric"},
+                {"name": "Fall Sow Offset", "id": "fall_sow", "deletable": False, "selectable": False, "hideable": False, "type": "numeric"},
+                {"name": "Calories/Gram", "id": "cal_g", "deletable": False, "selectable": False, "hideable": False, "type": "numeric"},
+
             ],
             data=df.to_dict('records'),
             editable=True, #allows editing

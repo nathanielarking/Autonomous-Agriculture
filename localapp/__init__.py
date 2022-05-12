@@ -1,4 +1,3 @@
-from data import engine, init_engine
 from . import mqtt
 
 #Allow the thread to restart after any interruptions
@@ -9,9 +8,10 @@ def localapp_thread():
         except BaseException as e:
             print('{!r}; restarting thread'.format(e))
 
-def run_localapp():
+#Initialize our mqtt client
+client = mqtt.initialize()
 
-    init_engine()
+def run_localapp():
 
     #Uncomment this code to utilize the functions which import data from csv files into the database (may not work for your files)
     #from data.interface import csv_to_sql, csv_to_sql_harvest_data, csv_to_sql_temp_data, update_temp_file, csv_to_sql_harvest_data
@@ -22,8 +22,8 @@ def run_localapp():
     #update_temp_file()
     #csv_to_sql_harvest_data()
 
-    #Initialize our mqtt client
-    client = mqtt.connect()
+    #Connect our mqtt client
+    mqtt.connect(client)
 
     #Subscribe client to relevant topics
     mqtt.subscribe(client)

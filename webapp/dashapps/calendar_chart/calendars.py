@@ -123,6 +123,7 @@ def generate_temps_calendar(start_days, end_days):
 
                 if plant.min_temp < file.min and plant.max_temp > file.max:
                     df_temps[plant.name][file.date] = 0
+
                 else:
                     df_temps[plant.name][file.date] = round(max([plant.min_temp - file.min, file.max - plant.max_temp]), 2)
 

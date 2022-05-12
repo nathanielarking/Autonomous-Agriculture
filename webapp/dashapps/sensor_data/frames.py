@@ -1,7 +1,11 @@
 import pandas as pd
-from data.interface import get_frame
+from data.interface import get_frame, update_temp_file
+
 
 def get_summary_frame():
+
+    #Update temp file
+    update_temp_file()
 
     #Import frames and format
     df_summary = get_frame('TempFile')
@@ -31,10 +35,10 @@ def get_raw_frame():
     #Import the moisture reading database
     df_moisture = get_frame('MoistReading')
     df_moisture = df_moisture.drop('id', axis=1)
-    df_moisture['value'] = df_moisture['value'] - 200
-    df_moisture['value'] = df_moisture['value'] / 1800
-    df_moisture['value'] = df_moisture['value'] * 100
-    df_moisture['value'] = df_moisture['value'].map('{:,.2f}'.format)
+    #df_moisture['value'] = df_moisture['value'] - 200
+    #df_moisture['value'] = df_moisture['value'] / 1800
+    #df_moisture['value'] = df_moisture['value'] * 100
+    #df_moisture['value'] = df_moisture['value'].map('{:,.2f}'.format)
     df_moisture.rename(columns={'value': 'moisture'}, inplace=True)
 
     #Merge the two tables
@@ -42,7 +46,7 @@ def get_raw_frame():
 
     #Format columns
     df_raw['temp'] = df_raw['temp'].map('{:,.2f}°'.format)
-    df_raw.rename(columns={'datetime': 'Date and time', 'temp': 'Temperature (C)', 'moisture': 'Moisture (%)'}, inplace=True)
+    df_raw.rename(columns={'datetime': 'Date and time', 'temp': 'Temperature (C)', 'moisture': 'Moisture (200-2000)'}, inplace=True)
     df_raw = df_raw[::-1]
 
     return df_raw

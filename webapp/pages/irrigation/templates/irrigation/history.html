@@ -1,0 +1,58 @@
+{% extends "app/base.html" %}
+
+{% block title %}Irrigation Control | Autonomous Agriculture{% endblock %}
+
+
+{% block content %}
+<div class="row">
+    <div id="sidebar-container" class="sidebar-expanded d-none d-md-block sidenav">
+        <ul class="list-group sticky-top">
+            <a href="/irrigation/schedule">Schedule</a>
+            <a href="/irrigation/control">Control</a>
+            <a href="/irrigation/history">History</a>
+        </ul>
+    </div>
+    <div class="col">
+        <div class="body">
+            <div class="dash">
+                <h1 class="title">
+                    Irrigation Control
+                </h1>
+            
+                <div style="padding-top: 2%; padding-bottom: 2%; padding-left: 15%; padding-right: 15%">
+
+                    <form method="POST">
+                    <table>
+                        <tr>
+                            <td>Status: </td>
+                            <td>
+                                {% if status is true %}
+                                    Running
+                                {% elif status is false %}
+                                    Inactive
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><button type="button">Activate</button></td>
+                            <td>
+                                <input type="number" id="volume" name="volume" value="">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><button type="button">Cancel</button></td>
+                        </tr>
+                    </table>
+
+                    <button type="submit" class="btn-primary">Submit</button>
+
+                    </form>
+
+                </div>
+            
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+{% endblock %}

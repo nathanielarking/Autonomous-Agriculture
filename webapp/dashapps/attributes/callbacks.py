@@ -20,6 +20,7 @@ def register_callbacks(dashapp):
             #Get the table data as a dataframe, push it to sql
             df = pd.DataFrame(data)
             df_to_sql(df)
+            #sql_to_csv()
 
         #If the add button was pressed
         elif 'add-val' in changed_id:

@@ -34,6 +34,8 @@ def create_webapp():
     flask_app.register_blueprint(calendar_blueprint, urlprefix='/calendar')
     from .pages.sensors.sensors import sensors_blueprint
     flask_app.register_blueprint(sensors_blueprint, urlprefix='/sensors')
+    from .pages.irrigation.irrigation import irrigation_blueprint
+    flask_app.register_blueprint(irrigation_blueprint, urlprefix='/irrigation')
     from .pages.harvest.harvest import harvest_blueprint
     flask_app.register_blueprint(harvest_blueprint, urlprefix='/harvest')
     from .pages.entry.entry import entry_blueprint

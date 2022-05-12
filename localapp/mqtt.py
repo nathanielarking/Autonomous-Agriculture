@@ -14,7 +14,7 @@ port = 1883
 #Variable to store current date and whether this is the first run or not
 current_datetime = None
 
-def connect():
+def initialize():
     def on_connect(client, userdata, flags, rc):
         if rc == 0:
             print("Connected to MQTT Broker!")
@@ -31,14 +31,17 @@ def connect():
     client.username_pw_set('pi', 'largetomato')
     client.on_connect = on_connect
     client.on_disconnect = on_disconnect
-    client.connect(broker, port)
 
     return client
+
+def connect(client):
+    client.connect(broker, port)
 
 #Subcribe to relevant topics and set callback for message
 def subscribe(client):
     def on_message(client, userdata, msg):
 
+        #This code assumes the reading is in the following format: year/month/day/hour/offset/temperature/moisture
         if msg.topic == 'esp/soil_sensor':
             #Get reading and strip unnecceary characters
             reading = str(msg.payload)
@@ -89,6 +92,12 @@ def publish_date(client):
 
         #Also, take a picture
         cam_capture()
+
+def activate_irrigation(client, volume):
+    client.publish("irrigation/activate", volume)
+
+def cancel_irrigation():
+    pass
 
 def update(client):
 

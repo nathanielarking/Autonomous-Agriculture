@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import Session, sessionmaker
 import os
 import logging
 
@@ -27,8 +27,9 @@ def init_engine():
     Base.metadata.create_all(bind=engine)
 
     #Uncomment this code to clear models from the database
-    #Session = sessionmaker(bind=engine)
-    #session = Session()
-    #session.query(model).delete()
+    #with Session(engine) as session:
+        #session.query(Plant).delete()
+        #session.commit()
+
 
     

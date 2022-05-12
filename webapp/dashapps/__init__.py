@@ -61,6 +61,12 @@ def create_dashboards(flask_app):
     harvest_data_dash = register_dashapp(flask_app, 'harvest_data', 'harvest/data/', harvest_data_serve_layout, harvest_data_register_callbacks)
     container.add('harvest_data', harvest_data_dash)
 
+    #Create irrigation control dashboard
+    from .irrigation_control.layout import serve_layout as irrigation_control_serve_layout
+    from .irrigation_control.callbacks import register_callbacks as irrigation_control_register_callbacks
+    irrigation_control_dash = register_dashapp(flask_app, 'irrigation_control', 'irrigation/control/', irrigation_control_serve_layout, irrigation_control_register_callbacks)
+    container.add('irrigation_control', irrigation_control_dash)
+
 #Code to register an individual dashboard
 def register_dashapp(app, title, base_path, layout, register_callbacks):
     #Meta tags for viewport responsiveness

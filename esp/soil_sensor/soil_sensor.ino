@@ -23,16 +23,17 @@ void setup() {
 
   //Grab sensor value
   float soil_temp = read_soil_temp();
+  unsigned int soil_moisture = read_soil_moisture();
   
   //If a successful connection is established with the MQTT broker
   if(connect_wifi() && connect_mqtt()){
 
     //Pull the date from the date file
-    char reading[30];
+    char reading[35];
     read_date(reading);
 
     //Add the temp value to the string
-    sprintf(reading, "%s/%.2f", reading, soil_temp);
+    sprintf(reading, "%s/%.2f/%d", reading, soil_temp, soil_moisture);
 
     //Publish reading plus any readings in temp file
     publish_readings(reading);
@@ -41,13 +42,13 @@ void setup() {
     }else{
 
       //Pull the date from the date file, increment its offset, and put it back
-      char reading[30];
+      char reading[35];
       read_date(reading);
       increment_offset(reading);
       write_date(reading);
 
       //Add the temp value to the string
-      sprintf(reading, "%s/%.2f", reading, soil_temp);
+      sprintf(reading, "%s/%.2f/%d", reading, soil_temp, soil_moisture);
 
       //Print the reading into the temp file
       write_reading(reading);

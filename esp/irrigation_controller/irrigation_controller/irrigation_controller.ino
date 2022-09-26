@@ -19,6 +19,9 @@
 //Stores how long to wait for barrel's water to reach flow meter
 unsigned int barrel_timeout = 5000;
 
+//When dispensing water, define what litre resolution to save snapshots of data
+const float data_resolution = 0.2;
+
 //This integer needs to be set as volatile to ensure it updates correctly during the interrupt process.
 volatile int pulses = 0; 
 
@@ -101,6 +104,7 @@ void drain_pressure(float target_drain_pressure){
 
 float get_pressure(){
   
+  return 101.3;
   
   }
 
@@ -149,10 +153,10 @@ void dispense_volume(float target_volume){
       last_pulses = pulses;
       last_timestamp = millis();
       }
-  
+
+    //Update rate count for reporting in json
     avg_rate += rate;
     avg_count++;
-
     pressure = 101.3;
 
     DEBUG_SERIAL.print("Volume: ");
@@ -160,7 +164,9 @@ void dispense_volume(float target_volume){
     DEBUG_SERIAL.print(", Rate(L/min): ");
     DEBUG_SERIAL.println(rate);
 
-    if((volume - last_volume) >= 0.02){
+
+    //When change in volume equals data resolution, save snapshot to json
+    if((volume - last_volume) >= data_resolution){
 
       avg_rate /= avg_count;
 
@@ -178,6 +184,7 @@ void dispense_volume(float target_volume){
     //Break once target volume has been reached
     if(volume >= target_volume){
 
+      //If the dispensing process is ended without switching to the hose, set the barrel volume to the volume
       if(barrel_flag && !hose_flag){
         barrel_volume = volume;        
         }
@@ -198,7 +205,9 @@ void dispense_volume(float target_volume){
       doc["barrel_volume"] = (int)(barrel_volume * 1000);
       doc["barrel_off_timestamp"] = barrel_off_timestamp - barrel_start_timestamp;
 
-      serializeJson(doc, Serial);
+      char json_buffer[256];
+      size_t n = serializeJson(doc, json_buffer);
+      publish_json(json_buffer, n);
       
       break;
       

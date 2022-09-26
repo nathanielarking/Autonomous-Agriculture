@@ -16,6 +16,9 @@ void on_message(const char* topic, byte* payload, unsigned int length);
 //Allow the MQTT to update
 void loop_mqtt();
 
+//Publish the json from the dispensing process
+void publish_json(char* json_buffer, size_t n);
+
 //Returns the target volume as collected from the MQTT server
 float get_target_volume();
 

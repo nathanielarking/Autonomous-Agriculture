@@ -147,6 +147,10 @@ void loop_mqtt(){
   mqtt_client.loop();
   }
 
+void publish_json(char* json_buffer, size_t n){
+  mqtt_client.publish("irrigation/report", json_buffer, n);
+  }
+
 float get_target_volume(){
   return recieved_volume;
   recieved_volume = NULL;
